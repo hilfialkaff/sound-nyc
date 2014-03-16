@@ -1,7 +1,7 @@
 # Legend
 
 -  [+120 db]: Red - Immediate Hearing Damage possible
--  [120 - 85 db]: Red - Hearing damage within minutes to hours
+-  [120 - 85 db]: Orange - Hearing damage within minutes to hours
 
 # NYC Events #
 The following is a listing of events in New York City with their location of 
