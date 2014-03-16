@@ -1,3 +1,9 @@
+# Legend
+
+- [+120 db] Immediate Hearing Damage possible
+- [120 - 80 db] Hearing damage within minutes to hours
+- [80 - 0 db] Safe sound
+
 # NYC Events #
 The following is a listing of events in New York City with their location of 
 occurence, time of occurence, and relative loudness (in decibals).  The
