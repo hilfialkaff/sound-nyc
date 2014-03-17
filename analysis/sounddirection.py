@@ -1,5 +1,6 @@
 from sympy.solvers import solve
 from sympy import Symbol, log
+from math import log10
 import matplotlib.pyplot as plt
 
 A_ATMOSPHERE = 14.1/1000
@@ -27,8 +28,8 @@ def solve_db(source,r):
     @param r radius in meters
     @return decibel of the location away by {@param r} meters from the source with {@param source} dBs
     """
-    target = Symbol('target')
-    return solve(source-target-20*log(r,10)-A_ATMOSPHERE*r-A_WEATHER*r-A_GROUND*r-A_BARRIER*r/DISTANCE_BUILDINGS,target)[0]
+    t = Symbol('t')
+    return solve(source-t-20*log10(r)-A_ATMOSPHERE*r-A_WEATHER*r-A_GROUND*r-A_BARRIER*r/DISTANCE_BUILDINGS,t)[0]
 
 def plot(source, name):
     print name 
@@ -54,6 +55,7 @@ def plot(source, name):
     plt.xlabel('Distance in meters from source')
     plt.ylabel('Decibels')
     plt.savefig(name)
+    plt.clf()
 
 def plot_twintowers():
     plot(198.1, 'twintowers.png')
@@ -138,5 +140,5 @@ def solve_all():
     
 
 if __name__=='__main__':
-    #plot_all()
+    plot_all()
     solve_all()
