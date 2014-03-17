@@ -39,15 +39,15 @@ relative locations of these events can be viewed [here][nyc-map].
     - Time: August 21st, 2013
     - Loudness: 106.0 dB
     - Distance:
-        -  [106.0 - 85 db] Orange: 9m
+        -  [106.0 - 85 db]: 9m
     - [Source](http://ny.eater.com/archives/2013/08/retaurant_decibel_levels.php)
 - Shooting of John Lennon
     - Location: Dakota Apt. Building, West 72nd Street, New York, New York
     - Time: December 8th, 1980
     - Loudness: 153.5 dB
     - Distance:
-        -  [153.5 - 120 db] Red: 28m
-        -  [120  - 85 db] Orange: 127m
+        -  [153.5 - 120 db]: 28m
+        -  [120  - 85 db]: 127m
     - [Source](http://www.keepandbeararms.com/information/XcIBViewItem.asp?id=2052)
 - Wall Street Bombing
     - Location: Wall Street, New York, New York
