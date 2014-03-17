@@ -45,7 +45,7 @@ def plot(source, name):
         distances.append(r)
         r += 10
     # endwhile
-    plt.plot(distances,decibels, 'ro')
+    plt.plot(distances,decibels, '-r')
 
     if source >= EARDRUM_DECIBEL:
         plt.plot([solve_r(source,EARDRUM_DECIBEL)], [EARDRUM_DECIBEL], 'yo')
