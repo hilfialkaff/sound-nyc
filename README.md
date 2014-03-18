@@ -2,6 +2,23 @@
 
 Sound level of historical events in NYC
 
+## Installation
+
+Type the following into your terminal:
+```
+git clone https://github.com/efekarakus/sound-nyc
+```
+
+## Run
+
+Type the following into your terminal:
+```
+cd /path/to/sound-nyc
+python -m SimpleHTTPServer 8008 &
+```
+
+Visit [http://localhost:8008](http://localhost:8008)
+
 ## Requirements
 
 - Analysis:
