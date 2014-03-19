@@ -5,7 +5,7 @@ if __name__=='__main__':
     routes = None
     with open('boundaries.json', 'r') as f:
         boundaries = json.load(f)
-    with open('ny_routes.json', 'r') as f:
+    with open('routes.json', 'r') as f:
         routes = json.load(f)
 
     nyc = {

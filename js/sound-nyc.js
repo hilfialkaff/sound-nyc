@@ -4,7 +4,7 @@ function drawMap()
         height = 500;
 
     var projection = d3.geo.mercator()
-        .center([-73.963394165, 40.79])
+        .center([-74, 40.79])
         .scale(150000)
         .translate([width/4, height/3]);
         
@@ -31,10 +31,8 @@ function drawMap()
             .data(nyc.features)
             .enter().append("path")
             .attr("class", function(d) {
-                if (d.geometry.type === "Polygon") return "borough";
-                else if (d.properties.featurecla === "River"){
-                    console.log(d);
-                    return "river";
+                if (d.geometry.type === "Polygon" || d.properties.iso_3166_2 === "US-NJ") {
+                    return "borough";
                 }
                 return getRoadType(d);
             })

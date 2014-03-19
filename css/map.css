@@ -1,34 +1,36 @@
+/*  #cddce0 */
+/* #E6EEF5 */
 .road {
     fill: none;
-    stroke: #E5E5E5;
+    stroke: #fff;
     stroke-width: 1px;
 }
 
 .road-primary {
     fill: none;
-    stroke: #E5E5E5;
+    stroke: #fff;
     stroke-width: 1.3px;
 }
 
 .road-freeway {
     fill: none;
-    stroke: #E5E5E5;
+    stroke: #fff;
     stroke-width: 1.6px;
 }
 
 .road-tollway {
     fill: none;
-    stroke: #E5E5E5;
+    stroke: #fff;
     stroke-width: 2px;
 }
 
 
 .borough {
-    fill: #E6EEF5;
+    fill: #c8dded;
     stroke: #CADEEA;
     stroke-width: 1px;
 }
 
 .background {
-    fill: #7591A4;
+    fill: #7897b5;
 }
