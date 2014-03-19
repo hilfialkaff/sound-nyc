@@ -66,4 +66,5 @@ relative locations of these events can be viewed [here][nyc-map].
         - [110 - 85 db]: 14m
     - [Source](http://www.gcaudio.com/resources/howtos/loudness.html)
 
-[nyc-map]: http://goo.gl/maps/MBFWU
+
+[nyc-map]: http://goo.gl/maps/e1TKG
