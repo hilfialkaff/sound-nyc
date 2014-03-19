@@ -1,0 +1,11 @@
+.roads {
+    fill: none;
+    stroke: #CCCCCC;
+    stroke-width: 0.3px;
+}
+
+.borough {
+    fill: none;
+    stroke: #303030;
+    stroke-width: 0.7px;
+}

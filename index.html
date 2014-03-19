@@ -1,54 +1,16 @@
 <html>
     <head>
         <title>Can you hear me NYC?</title>
-        <style>
-        .roads {
-			fill: none;
-			stroke: #CCCCCC;
-			stroke-width: 0.3px;
-		}
-        .borough {
-            fill: none;
-            stroke: #303030;
-            stroke-width: 0.7px;
-        }
-        </style>
-		<script src="http://d3js.org/d3.v3.min.js"></script>
-		<script src="http://d3js.org/topojson.v1.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+        <link rel="stylesheet" type="text/css" href="css/map.css">
     </head>
     <body>
+        <div class="map"></div>
 
-		<script>
 
-		var width = 960,
-			height = 500;
-
-		var projection = d3.geo.mercator()
-			.center([-73.963394165, 40.79])
-			.scale(100000)
-            .translate([width/2, height/2]);
-			
-		var path = d3.geo.path()
-			.projection(projection);
-			
-		var svg = d3.select("body").append("svg")
-			.attr("width", width)
-			.attr("height", height);
-			
-		var roads = svg.append("g")
-			.attr("transform", "rotate(0)")
-
-        var count = 0;
-		d3.json('./map/nyc.json', function(err, data) {
-			roads.selectAll("path")
-				.data(data.features)
-				.enter().append("path")
-				.attr("class", function(d) {
-                    return d.geometry.type === "Polygon" ? "borough" : "roads";
-                })
-				.attr("d", path);
-		});
-        
-		</script>
+        <script src="js/d3.v3.min.js"></script>
+        <script src="js/topojson.v1.min.js"></script>
+        <script src="js/jquery-1.11.0.min.js"></script>
+        <script src="js/sound-nyc.js"></script>
     </body>
 </html>
