@@ -4,9 +4,14 @@
         <style>
         .roads {
 			fill: none;
-			stroke: #000;
-			stroke-width: 0.5px;
+			stroke: #CCCCCC;
+			stroke-width: 0.3px;
 		}
+        .borough {
+            fill: none;
+            stroke: #303030;
+            stroke-width: 0.7px;
+        }
         </style>
 		<script src="http://d3js.org/d3.v3.min.js"></script>
 		<script src="http://d3js.org/topojson.v1.min.js"></script>
@@ -33,14 +38,17 @@
 		var roads = svg.append("g")
 			.attr("transform", "rotate(0)")
 
-		d3.json('./map/routes.json', function(err, data) {
+        var count = 0;
+		d3.json('./map/nyc.json', function(err, data) {
 			roads.selectAll("path")
 				.data(data.features)
 				.enter().append("path")
-				.attr("class", "roads")
+				.attr("class", function(d) {
+                    return d.geometry.type === "Polygon" ? "borough" : "roads";
+                })
 				.attr("d", path);
 		});
-
+        
 		</script>
     </body>
 </html>
