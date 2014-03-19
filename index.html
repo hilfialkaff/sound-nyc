@@ -33,7 +33,7 @@
 		var roads = svg.append("g")
 			.attr("transform", "rotate(0)")
 
-		d3.json('./map/ny_routes.json', function(err, data) {
+		d3.json('./map/routes.json', function(err, data) {
 			roads.selectAll("path")
 				.data(data.features)
 				.enter().append("path")
