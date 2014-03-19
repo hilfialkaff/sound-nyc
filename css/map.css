@@ -1,11 +1,34 @@
-.roads {
+.road {
     fill: none;
-    stroke: #CCCCCC;
-    stroke-width: 0.3px;
+    stroke: #E5E5E5;
+    stroke-width: 1px;
 }
 
-.borough {
+.road-primary {
     fill: none;
-    stroke: #303030;
-    stroke-width: 0.7px;
+    stroke: #E5E5E5;
+    stroke-width: 1.3px;
+}
+
+.road-freeway {
+    fill: none;
+    stroke: #E5E5E5;
+    stroke-width: 1.6px;
+}
+
+.road-tollway {
+    fill: none;
+    stroke: #E5E5E5;
+    stroke-width: 2px;
+}
+
+
+.borough {
+    fill: #E6EEF5;
+    stroke: #CADEEA;
+    stroke-width: 1px;
+}
+
+.background {
+    fill: #7591A4;
 }
