@@ -25,30 +25,20 @@ function drawMap()
     var map = svg.append("g");
 
     var count = 0;
-    d3.json('./map/nyc.json', function(err, nyc) {
+    d3.json('map/nyctopo.json', function(err, json) {
         map.selectAll("path")
-            .data(nyc.features)
+            .data(topojson.feature(json, json.objects.nyc).features)
             .enter().append("path")
             .attr("class", function(d) {
-                if ("borough" in d.properties) {
-                    return "borough";
+                if (count === 0) console.log(d);
+                count = 1;
+                var type = d.properties.type;
+                if (type === "boundary") {
+                    return "boundary";
                 }
-                else if ("park" in d.properties) {
-                    return "park";
-                }
-                return getRoadType(d);
+                return "road";
             })
             .attr("d", path);
-
-
-        function getRoadType(d)
-        {
-            var type = d.properties.type;
-            if (type === "Freeway") return "road-freeway";
-            else if (type === "Tollway") return "road-tollway";
-            else if (d.properties.type === "Primary") return "road-primary";
-            return "road";
-        }
     });
 }
 

@@ -25,7 +25,21 @@ if __name__=='__main__':
     with open('JSONs/boundaries.json', 'r') as f:
         boundaries = json.load(f)
 
+    for feature in boundaries['features']:
+        feature['properties']['type'] = 'boundary'
+
     [bronx, queens, manhattan, kings] = getNYCRoutes()
+    for feature in bronx['features']:
+        feature['properties']['type'] = 'road'
+    for feature in queens['features']:
+        feature['properties']['type'] = 'road'
+    for feature in manhattan['features']:
+        feature['properties']['type'] = 'road'
+    for feature in kings['features']:
+        feature['properties']['type'] = 'road'
+
+
+
 
     nyc = {
         "type": "FeatureCollection",
