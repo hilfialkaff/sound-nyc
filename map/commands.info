@@ -1,0 +1,10 @@
+# Command to create the topo file
+
+ogr2ogr -f GeoJSON -where "STATE = 'New York'" ny_routes.json ne_10m_roads_north_america.shp
+ogr2ogr -f GeoJSON -where "STATE = 'New York' OR STATE = 'New Jersey'" routes.json ne_10m_roads_north_america.shp
+
+# Project to geographic
+ogr2ogr -t_srs EPSG:4326 outputwith4236.shp input.shp
+
+# Topojson command
+topojson -p type nyctopo.json nyc.json
