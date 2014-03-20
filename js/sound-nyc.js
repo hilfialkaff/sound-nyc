@@ -24,14 +24,13 @@ function drawMap()
         
     var map = svg.append("g");
 
-    var count = 0;
     d3.json('map/nyctopo.json', function(err, json) {
+    //d3.json('map/nyc.json', function(err, json) {
         map.selectAll("path")
             .data(topojson.feature(json, json.objects.nyc).features)
+            //.data(json.features)
             .enter().append("path")
             .attr("class", function(d) {
-                if (count === 0) console.log(d);
-                count = 1;
                 var type = d.properties.type;
                 if (type === "boundary") {
                     return "boundary";
