@@ -5,8 +5,8 @@ function drawMap()
 
     var projection = d3.geo.mercator()
         .center([-74, 40.79])
-        .scale(150000)
-        .translate([width/4, height/3]);
+        .scale(220000)
+        .translate([width/3, height/12]);
         
     var path = d3.geo.path()
         .projection(projection);
