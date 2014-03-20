@@ -31,6 +31,12 @@
     stroke-width: 1px;
 }
 
+.park {
+    fill: #8BCDFF;
+    stroke: #45667F;
+    stroke-width: 0.8px;
+}
+
 .background {
     fill: #7897b5;
 }

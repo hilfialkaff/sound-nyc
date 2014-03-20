@@ -5,8 +5,8 @@ function drawMap()
 
     var projection = d3.geo.mercator()
         .center([-74, 40.79])
-        .scale(220000)
-        .translate([width/3, height/12]);
+        .scale(250000)
+        .translate([width/5, height/50]);
         
     var path = d3.geo.path()
         .projection(projection);
@@ -22,8 +22,7 @@ function drawMap()
             .attr("height", height)
             .attr("class", "background");
         
-    var map = svg.append("g")
-        .attr("transform", "rotate(0)")
+    var map = svg.append("g");
 
     var count = 0;
     d3.json('./map/nyc.json', function(err, nyc) {
@@ -31,8 +30,11 @@ function drawMap()
             .data(nyc.features)
             .enter().append("path")
             .attr("class", function(d) {
-                if (d.geometry.type === "Polygon" || d.properties.iso_3166_2 === "US-NJ") {
+                if ("borough" in d.properties) {
                     return "borough";
+                }
+                else if ("park" in d.properties) {
+                    return "park";
                 }
                 return getRoadType(d);
             })
