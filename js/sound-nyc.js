@@ -1,3 +1,43 @@
+function addEventIcons(_map,_projection,_events)
+{
+    var arc = d3.svg.arc()
+        .innerRadius(20)
+        .outerRadius(20)
+        .startAngle(5.72)
+        .endAngle(6.84);
+
+    var pf = function(_data) {
+        return "translate(" + _projection(_data["coordinates"]) + ")";
+    };
+
+    var eventIcon = _map.selectAll(".event-icon")
+        .data(_events)
+        .enter()
+            .append("g")
+            .attr("class", "event-icon")
+            .attr("transform", pf);
+
+    eventIcon.append("line")
+        .attr("x1", 0)
+        .attr("y1", 0)
+        .attr("x2", 11)
+        .attr("y2", -18);
+        
+    eventIcon.append("line")
+        .attr("x1", 0)
+        .attr("y1", 0)
+        .attr("x2", -11)
+        .attr("y2", -18);
+
+    eventIcon.append("circle")
+        .attr("cx", 0)
+        .attr("cy", -15)
+        .attr("r", 2.0);
+
+    eventIcon.append("path")
+        .attr("d", arc);
+}
+
 function drawMap()
 {
     var width = 960,
@@ -34,10 +74,25 @@ function drawMap()
                 var type = d.properties.type;
                 if (type === "boundary") {
                     return "boundary";
+                } else {
+                    var detail = d.properties.detail;
+                    var majorRoads = ["Hwy", "Expy", "Brg", "Fwy", "Blvd"]
+                    return majorRoads.indexOf(detail) > -1 ? "road" : "road-minor";
                 }
-                return "road";
             })
             .attr("d", path);
+        
+        var mapEvents = [
+            {
+                "name": "Wall Street Bombing",
+                "date": new Date( 1920, 9, 16, 0, 0, 0, 0 ),
+                "location": "Wall Street, New York",
+                "coordinates": [ -74.008741, 40.706148 ],
+                "sound_radii": [ 5.0, 96.0, 261.0 ]
+            }
+        ];
+        
+        addEventIcons(svg, projection, mapEvents);
     });
 }
 

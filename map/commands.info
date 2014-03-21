@@ -7,4 +7,4 @@ ogr2ogr -f GeoJSON -where "STATE = 'New York' OR STATE = 'New Jersey'" routes.js
 ogr2ogr -t_srs EPSG:4326 outputwith4236.shp input.shp
 
 # Topojson command
-topojson -p type nyctopo.json nyc.json
+topojson -p detail=FETYPE -p detail -p type -o nyctopo.json nyc.json
