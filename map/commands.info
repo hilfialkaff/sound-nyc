@@ -6,5 +6,8 @@ ogr2ogr -f GeoJSON -where "STATE = 'New York' OR STATE = 'New Jersey'" routes.js
 # Project to geographic
 ogr2ogr -t_srs EPSG:4326 outputwith4236.shp input.shp
 
+# Clipping to manhattan and surroundings
+ogr2ogr -f geoJSON -clipdst -74.0246256982 40.68475499 -73.8541282959 40.8097539458 manhattan.clipped.json 00500rds98cu.shp
+
 # Topojson command
 topojson -p detail=FETYPE -p detail -p type -o nyctopo.json nyc.json

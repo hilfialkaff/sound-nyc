@@ -17,13 +17,13 @@ def getNYCRoutes():
     kings = None
 
 
-    with open('JSONs/bronx.json', 'r') as f:
+    with open('JSONs/bronx.clipped.json', 'r') as f:
         bronx = json.load(f)
-    with open('JSONs/queens.json', 'r') as f:
+    with open('JSONs/queens.clipped.json', 'r') as f:
         queens = json.load(f)
-    with open('JSONs/manhattan.json', 'r') as f:
+    with open('JSONs/manhattan.clipped.json', 'r') as f:
         manhattan = json.load(f)
-    with open('JSONs/kings.json', 'r') as f:
+    with open('JSONs/kings.clipped.json', 'r') as f:
         kings = json.load(f)
 
     return [bronx, queens, manhattan, kings]
@@ -36,6 +36,7 @@ def setType(data, val):
 
 if __name__=='__main__':
     boundaries = None
+    roads = None
 
     with open('JSONs/boundaries.json', 'r') as f:
         boundaries = json.load(f)
