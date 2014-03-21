@@ -43,7 +43,15 @@ g.event-icon circle {
 }
 
 g.event-icon path {
-    fill: none;
+    /*fill: none;*/
+    fill: #ff004b;
     stroke: #ff004b;
     stroke-width: 1.5px;
+}
+
+g.event-icon rect.event-details {
+    stroke: #000;
+    stroke-width: 1px;
+    fill: #FFEE2C;
+    opacity: 0.5;
 }

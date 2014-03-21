@@ -1,7 +1,7 @@
 function addEventIcons(_map,_projection,_events)
 {
     var arc = d3.svg.arc()
-        .innerRadius(20)
+        .innerRadius(15)
         .outerRadius(20)
         .startAngle(5.72)
         .endAngle(6.84);
@@ -29,13 +29,66 @@ function addEventIcons(_map,_projection,_events)
         .attr("x2", -11)
         .attr("y2", -18);
 
+    /*
     eventIcon.append("circle")
         .attr("cx", 0)
         .attr("cy", -15)
         .attr("r", 2.0);
+    */
 
     eventIcon.append("path")
         .attr("d", arc);
+
+    showEventName(eventIcon);
+
+    eventIcon.on("mouseover", function(d) {
+        var eicon = d3.select(this);
+        showEventDetails(eicon);
+    });
+
+    eventIcon.on("click", function(d) {
+        // TODO @Joe circle stuff
+        var eicon = d3.select(this);
+        showEventName(eicon);
+    });
+
+    eventIcon.on("mouseout", function(d) {
+        var eicon = d3.select(this);
+        showEventName(eicon);
+    });
+
+    function showEventName(eicon)
+    {
+        var width = 300, height = 30, offset = 20;
+        var max_width = 960, max_height = 500;
+
+        eicon.select(".event-details")
+            .remove();
+
+        eicon.append("rect")
+                .attr("class", "event-details")
+                .attr("x", function(d) {
+                    var xprojection = _projection(d["coordinates"])[0];
+
+                    if ( xprojection + width + offset <= max_width ) return offset;
+                    else return max_width - (xprojection + width + offset);
+                })
+                .attr("y", function(d) {
+                    var yprojection = _projection(d["coordinates"])[1];
+
+                    if (yprojection + height <= max_height) return 0;
+                    else return max_height - (yprojection + height);
+                })
+                .attr("width", width)
+                .attr("height", height);
+
+    }
+
+    function showEventDetails(eicon, d)
+    {
+        eventIcon.select(".event-details")
+            .remove();
+    }
 }
 
 function drawMap()
