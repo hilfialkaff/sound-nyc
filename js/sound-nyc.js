@@ -33,46 +33,45 @@ function populateMap( _map, _projection, _events )
 	var ETOOLTIP_RADIUS = 5.0;
 
 	// Helper Functions //
-	var EVENT_ID_FXN = function( _data )
+	function getEventID( _eventData )
 	{
-		return replaceAll( " ", "_", _data[ "name" ] );
-	};
-	var EVENT_TRANSLATION_FXN = function( _data )
+		return replaceAll( " ", "_", _eventData[ "name" ] );
+	}
+	function getEventTranslation( _eventData )
 	{
-		return "translate(" + _projection( _data["coordinates"] ) + ")";
-	};
+		return "translate(" + _projection( _eventData["coordinates"] ) + ")";
+	}
 
-	var ETOOLTIP_TRANSLATION_FXN = function( _data )
+	function getTooltipTranslation( _eventData )
 	{
 		var tooltipOffset = [
 			EICON_OUTER_RADIUS + EICON_OUTER_STROKE + 2.0 * ETOOLTIP_PADDING,
-			// TODO: Assumes that the text length is 2.0 * EICON_OUTER_RADIUS...
 			-EICON_OUTER_RADIUS
 		];
 		return "translate(" + tooltipOffset + ")";
-	};
-	var ETOOLTIP_CONTAINER_SCALE_FXN = function( _data )
+	}
+	function getTooltipContainerScale( _eventData )
 	{
-		var headingElement = d3.select( "#" + EVENT_ID_FXN( _data ) )
+		var headingElement = d3.select( "#" + getEventID( _eventData ) )
 			.select( ".event-tooltip" )
 			.select( ".tooltip-heading" );
 		var boundingRect = headingElement.node().getBBox();
 
 		return [ boundingRect.width + 2.0 * ETOOLTIP_PADDING,
 			     boundingRect.height + 2.0 * ETOOLTIP_PADDING ];
-	};
-	var ETOOLTIP_SUMMARYTEXT_FXN = function( _data )
+	}
+	function getTooltipHeadingText( _eventData )
 	{
-		return _data[ "name" ].toUpperCase();
-	};
+		return _eventData[ "name" ].toUpperCase();
+	}
 
 	// Other Variables //
 	var overlay = _map.append( "g" );
 	var eventGroups = overlay.selectAll( ".event" )
 		.data( _events ).enter().append( "g" )
-		.attr( "id", EVENT_ID_FXN )
+		.attr( "id", getEventID )
 		.attr( "class", "event" )
-		.attr( "transform", EVENT_TRANSLATION_FXN );
+		.attr( "transform", getEventTranslation );
 
 	// Create Event Indicators //
 	{
@@ -95,7 +94,7 @@ function populateMap( _map, _projection, _events )
 	{
 		var eventTooltips = eventGroups.append( "g" )
 			.attr( "class", "event-tooltip" )
-			.attr( "transform", ETOOLTIP_TRANSLATION_FXN );
+			.attr( "transform", getTooltipTranslation );
 
 		var tooltipContainers = eventTooltips.append( "rect" )
 			.attr( "class", "tooltip-container" )
@@ -107,25 +106,29 @@ function populateMap( _map, _projection, _events )
 			.attr( "class", "tooltip-heading" )
 			.attr( "dx", 0 ).attr( "dy", 0 )
 			.attr( "text-anchor", "start" )
-			.text( ETOOLTIP_SUMMARYTEXT_FXN );
+			.text( getTooltipHeadingText );
 
 		// Note: "dy" for text is different for text, denoting the bottom-left
 		// corner of the text instead of the top-left.  This change accounts
 		// for this discrepancy.
 		tooltipHeadings
-			.attr( "dy", function( _data )
-			{
+			.attr( "dy", function( _data ) {
 				var tooltipHeading = d3.select( this );
 				var boundingRect = tooltipHeading.node().getBBox();
 				return boundingRect.height - ETOOLTIP_PADDING;
 			} );
 
-		// Note: SVG Font element size cannot be determined until it's rendered,
+		// Note: SVG font sizes cannot be determined until elements are rendered,
 		// so this width-height assignment for the containing rectangle element 
 		// needs to be deferred until this point.
 		tooltipContainers
-			.attr( "width", function( _data ) { return ETOOLTIP_CONTAINER_SCALE_FXN(_data)[0]; } )
-			.attr( "height", function( _data ) { return ETOOLTIP_CONTAINER_SCALE_FXN(_data)[1]; } )
+			.attr( "width", function( _data ) { 
+				return getTooltipContainerScale( _data )[ 0 ]; 
+			} )
+			.attr( "height", function( _data ) { 
+				return getTooltipContainerScale( _data )[ 1 ]; 
+			} );
+
 	}
 }
 
