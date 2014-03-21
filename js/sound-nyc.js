@@ -1,3 +1,6 @@
+var width = 960,
+    height = 700;
+
 /**
  * Find and replace all function for JavaScript strings.
  *
@@ -247,13 +250,11 @@ function addEventIcons(_map,_projection,_events)
 
 function drawMap()
 {
-    var width = 960,
-        height = 500;
 
     var projection = d3.geo.mercator()
         .center([-74, 40.79])
-        .scale(250000)
-        .translate([width/5, height/50]);
+        .scale(320000)
+        .translate([width/6, height/50]);
         
     var path = d3.geo.path()
         .projection(projection);
@@ -289,28 +290,9 @@ function drawMap()
             })
             .attr("d", path);
         
+	    populateMap( svg, projection, mapEvents );
     });
 
-	// TODO: Consider exporting this data to a JSON file instead.
-	var mapEvents = [
-		{
-			"name": "Wall Street Bombing",
-			"date": new Date( 1920, 9, 16, 0, 0, 0, 0 ),
-			"location": "Wall Street, New York",
-			"coordinates": [ -74.008741, 40.706148 ],
-			"sound_radii": [ 5.0, 96.0, 261.0 ]
-		},
-		{
-			"name": "Shooting of John Lennon",
-			"date": new Date( 1980, 12, 8, 0, 0, 0, 0 ),
-			"location": "West 72nd Street, New York",
-			"coordinates": [ -73.976297, 40.776122 ],
-			"sound_radii": [ 0.0, 28.0, 127.0 ]
-		}
-	];
-
-	populateMap( svg, projection, mapEvents );
-	//addEventIcons(svg, projection, mapEvents);
 }
 
 $(document).ready(function() 
