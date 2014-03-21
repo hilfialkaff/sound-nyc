@@ -1,29 +1,16 @@
-/*  #cddce0 */
-/* #E6EEF5 */
+.road-minor {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 1px;
+    stroke-opacity: 0.4;
+}
+
 .road {
     fill: none;
     stroke: #fff;
     stroke-width: 1px;
+    stroke-opacity: 0.8;
 }
-
-.road-primary {
-    fill: none;
-    stroke: #fff;
-    stroke-width: 1.3px;
-}
-
-.road-freeway {
-    fill: none;
-    stroke: #fff;
-    stroke-width: 1.6px;
-}
-
-.road-tollway {
-    fill: none;
-    stroke: #fff;
-    stroke-width: 2px;
-}
-
 
 .boundary {
     fill: #c8dded;
@@ -39,4 +26,42 @@
 
 .background {
     fill: #7897b5;
+}
+
+g.event-icon:hover {
+    cursor: pointer;
+}
+
+g.event-icon line {
+    stroke: #ff3171;
+    stroke-width: 1.5px;
+}
+
+g.event-icon circle {
+    stroke: #ff3171;
+    fill: #ff3171;
+}
+
+g.event-icon path {
+    /*fill: none;*/
+    fill: #ff3171;
+    stroke: #ff3171;
+    stroke-width: 1.5px;
+}
+
+g.event-icon rect.event-details {
+    stroke: #000;
+    stroke-width: 1px;
+    fill: #FFEE2C;
+    opacity: 0.5;
+}
+
+g.event-tooltip text {
+	font-size: 12px;
+	font-family: Courier New;
+}
+
+g rect.tooltip-container {
+    fill: #ffd157;
+    opacity: 0.8;
 }

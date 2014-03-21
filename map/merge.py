@@ -1,11 +1,22 @@
 import json
 
+
+def deleteRoutes(routes):
+    wanted = ['St', 'Ave', 'Blvd', 'Dr', 'Pky']
+    features = []
+    for feature in routes['features']:
+        if feature['properties']['FETYPE'] in wanted:
+            features.append(feature)
+    routes['features'] = features
+
+
 def getNYCRoutes():
     bronx = None
     queens = None
     manhattan = None
     kings = None
-    
+
+
     with open('JSONs/bronx.json', 'r') as f:
         bronx = json.load(f)
     with open('JSONs/queens.json', 'r') as f:
@@ -18,28 +29,25 @@ def getNYCRoutes():
     return [bronx, queens, manhattan, kings]
 
 
+def setType(data, val):
+    for feature in data['features']:
+        feature['properties']['type'] = val
+
+
 if __name__=='__main__':
     boundaries = None
-    parks = None
 
     with open('JSONs/boundaries.json', 'r') as f:
         boundaries = json.load(f)
 
-    for feature in boundaries['features']:
-        feature['properties']['type'] = 'boundary'
+    setType(boundaries, 'boundary')
 
     [bronx, queens, manhattan, kings] = getNYCRoutes()
-    for feature in bronx['features']:
-        feature['properties']['type'] = 'road'
-    for feature in queens['features']:
-        feature['properties']['type'] = 'road'
-    for feature in manhattan['features']:
-        feature['properties']['type'] = 'road'
-    for feature in kings['features']:
-        feature['properties']['type'] = 'road'
 
-
-
+    setType(bronx, 'road')
+    setType(queens, 'road')
+    setType(manhattan, 'road')
+    setType(kings, 'road')
 
     nyc = {
         "type": "FeatureCollection",
