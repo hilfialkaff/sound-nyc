@@ -128,7 +128,6 @@ function populateMap( _map, _projection, _events )
 			.attr( "height", function( _data ) { 
 				return getTooltipContainerScale( _data )[ 1 ]; 
 			} );
-
 	}
 }
 
