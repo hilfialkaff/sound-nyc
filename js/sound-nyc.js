@@ -47,7 +47,7 @@ function addEventIcons(_map,_projection,_events)
     });
 
     eventIcon.on("click", function(d) {
-        // TODO @Joe circle stuff
+        // TODO call Joe's circle function
         var eicon = d3.select(this);
         showEventName(eicon);
     });
@@ -59,35 +59,56 @@ function addEventIcons(_map,_projection,_events)
 
     function showEventName(eicon)
     {
-        var width = 300, height = 30, offset = 20;
-        var max_width = 960, max_height = 500;
+        eicon.selectAll(".event-details").remove();
+        _drawDetailsBox(eicon, 250, 30, 20);
 
-        eicon.select(".event-details")
-            .remove();
-
-        eicon.append("rect")
-                .attr("class", "event-details")
-                .attr("x", function(d) {
-                    var xprojection = _projection(d["coordinates"])[0];
-
-                    if ( xprojection + width + offset <= max_width ) return offset;
-                    else return max_width - (xprojection + width + offset);
-                })
-                .attr("y", function(d) {
-                    var yprojection = _projection(d["coordinates"])[1];
-
-                    if (yprojection + height <= max_height) return 0;
-                    else return max_height - (yprojection + height);
-                })
-                .attr("width", width)
-                .attr("height", height);
-
+        var t = eicon.selectAll("text.event-details");
+        t.text(function(d) { return d["name"].toUpperCase(); });
     }
 
-    function showEventDetails(eicon, d)
+    function showEventDetails(eicon)
     {
-        eventIcon.select(".event-details")
-            .remove();
+        eicon.selectAll(".event-details").remove();
+    }
+
+    function _drawDetailsBox(eicon, width, height, offset)
+    {
+        var max_width = 960, max_height = 500;
+
+        eicon.append("rect")
+            .attr("class", "event-details")
+            .attr("x", function(d) {
+                var xprojection = _projection(d["coordinates"])[0];
+
+                if ( xprojection + width + offset <= max_width ) return offset;
+                else return max_width - (xprojection + width + offset);
+            })
+            .attr("y", function(d) {
+                var yprojection = _projection(d["coordinates"])[1];
+
+                if (yprojection + height <= max_height) return 0;
+                else return max_height - (yprojection + height);
+            })
+            .attr("width", width)
+            .attr("height", height);
+
+        eicon.append("text")
+            .attr("class", "event-details")
+            .attr("x", function(d) {
+                var toffset = offset+10;
+                var xprojection = _projection(d["coordinates"])[0];
+
+                if (xprojection + width + toffset <= max_width) return toffset;
+                else return max_width - (xprojection + width + toffset);
+            })
+            .attr("y", function(d) {
+                var yprojection = _projection(d["coordinates"])[1];
+
+                if (yprojection + height <= max_height) return height/2;
+                else return max_height - (yprojection + height) + height/2;
+            })
+            .attr("dy", ".35em")
+            .text("");
     }
 }
 
