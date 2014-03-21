@@ -49,11 +49,11 @@ g.event-icon path {
     stroke-width: 1.5px;
 }
 
-g.event-icon rect.event-details {
+rect.event-details {
     stroke: #000;
     stroke-width: 1px;
-    fill: #FFEE2C;
-    opacity: 0.5;
+    fill: #E8D645;
+    opacity: 0.8;
 }
 
 g.event-tooltip text {
