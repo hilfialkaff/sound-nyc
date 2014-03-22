@@ -34,6 +34,7 @@ function populateMap( _map, _projection, _events )
 
 	var ETOOLTIP_PADDING = 3.0;
 	var ETOOLTIP_RADIUS = 5.0;
+    var ETOOLTIP_RIGHT_MARGIN = 5.0;
 
 	// Helper Functions //
 	function getEventID( _eventData )
@@ -60,7 +61,7 @@ function populateMap( _map, _projection, _events )
 			.select( ".tooltip-heading" );
 		var boundingRect = headingElement.node().getBBox();
 
-		return [ boundingRect.width + 2.0 * ETOOLTIP_PADDING,
+		return [ boundingRect.width + 2.0 * ETOOLTIP_PADDING + ETOOLTIP_RIGHT_MARGIN,
 			     boundingRect.height + 2.0 * ETOOLTIP_PADDING ];
 	}
 	function getTooltipHeadingText( _eventData )
@@ -258,7 +259,7 @@ function drawLegend(svg)
         .attr("class", "legend");
 
 
-    var LEGEND_WIDTH = 310,
+    var LEGEND_WIDTH = 350,
         LEGEND_HEIGHT = 100,
         LEGEND_RMARGIN = 10,
         LEGEND_BMARGIN = 5,

@@ -1,3 +1,8 @@
+@font-face {
+    font-family: OratorStd;
+    src: url('./oratorstd.ttf');
+}
+
 .road-minor {
     fill: none;
     stroke: #fff;
@@ -58,7 +63,8 @@ rect.event-details {
 
 g.event-tooltip text {
 	font-size: 12px;
-	font-family: Courier New;
+    font-family: OratorStd;
+    font-weight: 600;
 }
 
 g rect.tooltip-container {
@@ -89,5 +95,6 @@ g.legend rect.minor {
 
 g.legend text {
     font-size: 10px;
-    font-family: Courier New;
+    font-family: OratorStd;
+    font-weight: 800;
 }
