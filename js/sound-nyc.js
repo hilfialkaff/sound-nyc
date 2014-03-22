@@ -248,6 +248,110 @@ function addEventIcons(_map,_projection,_events)
     }
 }
 
+/**
+ * Draw the legend on the svg.
+ * @param svg The svg to draw the legend on.
+ */
+function drawLegend(svg)
+{
+    var g = svg.append("g")
+        .attr("class", "legend");
+
+
+    var LEGEND_WIDTH = 310,
+        LEGEND_HEIGHT = 100,
+        LEGEND_RMARGIN = 10,
+        LEGEND_BMARGIN = 5,
+        LEGEND_RX = 10,
+        LEGEND_RY = 10,
+        LEGEND_X = width - LEGEND_WIDTH - LEGEND_RMARGIN,
+        LEGEND_Y = height - LEGEND_HEIGHT - LEGEND_BMARGIN;
+
+    {
+        // draw the main box
+        g.append("rect")
+            .attr("class", "legend-box")
+            .attr("x", LEGEND_X)
+            .attr("y", LEGEND_Y)
+            .attr("width", LEGEND_WIDTH)
+            .attr("height", LEGEND_HEIGHT)
+            .attr("rx", LEGEND_RX)
+            .attr("ry", LEGEND_RY);
+    }
+
+    var R_LMARGIN = 10,
+        R_TMARGIN = 15,
+        R_RX = R_RY = 4,
+        R_WIDTH = 23,
+        R_HEIGHT = 8,
+        R_BETWEEN_OFFSET = 20,
+        R_X = LEGEND_X + R_LMARGIN,
+        R_EARDRUM_Y = LEGEND_Y + R_TMARGIN,
+        R_MAJOR_Y = R_EARDRUM_Y + R_BETWEEN_OFFSET,
+        R_MINOR_Y = R_MAJOR_Y + R_BETWEEN_OFFSET;
+
+    {
+        // draw the legend rectangles
+        g.append("rect")
+            .attr("class", "eardrum")
+            .attr("x", R_X)
+            .attr("y", R_EARDRUM_Y)
+            .attr("width", R_WIDTH)
+            .attr("height", R_HEIGHT)
+            .attr("rx", R_RX)
+            .attr("ry", R_RY);
+
+        g.append("rect")
+            .attr("class", "major")
+            .attr("x", R_X)
+            .attr("y", R_MAJOR_Y)
+            .attr("width", R_WIDTH)
+            .attr("height", R_HEIGHT)
+            .attr("rx", R_RX)
+            .attr("ry", R_RY);
+
+        g.append("rect")
+            .attr("class", "minor")
+            .attr("x", R_X)
+            .attr("y", R_MINOR_Y)
+            .attr("width", R_WIDTH)
+            .attr("height", R_HEIGHT)
+            .attr("rx", R_RX)
+            .attr("ry", R_RY);
+    }
+
+    var T_X = R_X + R_WIDTH + 5,
+        T_BETWEEN_OFFSET = 20,
+        T_EARDRUM_Y = R_EARDRUM_Y + 6,
+        T_MAJOR_Y = T_EARDRUM_Y + T_BETWEEN_OFFSET,
+        T_MINOR_Y = T_MAJOR_Y + T_BETWEEN_OFFSET,
+        T_SAFE_Y = T_MINOR_Y + T_BETWEEN_OFFSET;
+
+    {
+        // add the text for the legend
+        g.append("text")
+            .attr("x", T_X)
+            .attr("y", T_EARDRUM_Y)
+            .text("[+160DB] INSTANT PERFORATION OF EARDRUM");
+
+        g.append("text")
+            .attr("x", T_X)
+            .attr("y", T_MAJOR_Y)
+            .text("[159-120DB] HAZARDOUS SOUND LEVEL");
+
+        g.append("text")
+            .attr("x", T_X)
+            .attr("y", T_MINOR_Y)
+            .text("[119-85DB] POTENTIALLY HAZARDOUS SOUND LEVEL");
+
+        g.append("text")
+            .attr("x", T_X)
+            .attr("y", T_SAFE_Y)
+            .text("[84-0DB] SAFE");
+    }
+
+}
+
 function drawMap()
 {
 
@@ -291,6 +395,7 @@ function drawMap()
             .attr("d", path);
         
 	    populateMap( svg, projection, mapEvents );
+        drawLegend(svg);
     });
 
 }

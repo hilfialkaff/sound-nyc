@@ -65,3 +65,29 @@ g rect.tooltip-container {
     fill: #ffd157;
     opacity: 0.8;
 }
+
+
+g.legend rect.legend-box {
+    fill: #fff;
+    opacity: 0.8;
+}
+
+g.legend rect.eardrum {
+    fill: #000;
+    opacity: 0.8;
+}
+
+g.legend rect.major {
+    fill: #ff0000;
+    opacity: 0.5;
+}
+
+g.legend rect.minor {
+    fill: #ff0000;
+    opacity: 0.4;
+}
+
+g.legend text {
+    font-size: 10px;
+    font-family: Courier New;
+}
