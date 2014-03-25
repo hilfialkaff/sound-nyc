@@ -398,10 +398,8 @@ function drawMap()
     var map = svg.append("g");
 
     d3.json("map/nyctopo.json", function(err, json) {
-    //d3.json('map/nyc.json', function(err, json) {
         map.selectAll("path")
             .data(topojson.feature(json, json.objects.nyc).features)
-            //.data(json.features)
             .enter().append("path")
             .attr("class", function(d) {
                 var type = d.properties.type;
@@ -417,9 +415,24 @@ function drawMap()
         
 	    populateMap( svg, projection, mapEvents );
         drawLegend(svg);
+
+        stopLoadingScreen();
     });
 
 }
+
+/**
+ * Stop the circle from spinning in the loading screen
+ */
+function stopLoadingScreen()
+{
+    var contents = $(".spinner").contents();
+    $(".spinner").replaceWith(contents);
+    
+    contents = $(".mask").contents();
+    $(".mask").replaceWith(contents);
+}
+
 
 $(document).ready(function() 
 {

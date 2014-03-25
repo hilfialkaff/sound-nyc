@@ -68,6 +68,34 @@ span.b {
     cursor: pointer;
 }
 
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.play .spinner {
+    width: 50px;
+    height: 50px;
+    -webkit-animation:  spin 1s linear infinite;
+    -moz-animation:spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+}
+
+.play .mask {
+    width: 24px;
+    height: 24px;
+    overflow: hidden;
+}
+
 .play .maskedCircle {
     width: 50px;
     height: 50px;
@@ -75,6 +103,10 @@ span.b {
     border: 3px solid white;
 }
 
+/* 
+ * Credit:
+ * http://css-tricks.com/snippets/css/css-triangle/
+ */
 .play .arrow {
     width: 0; 
     height: 0;
