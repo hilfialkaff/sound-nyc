@@ -353,6 +353,26 @@ function drawLegend(svg)
 
 }
 
+/**
+ * @param container <svg> or <g> tag that we want to append the balloon to
+ * @param x Projected x coordinate to start at
+ * @param y Projected y coordinate to start at
+ */
+function drawBalloon(container, x, y)
+{
+    var g = container.append("g")
+        .attr("class", "balloon");
+
+    g.append("path")
+        .attr("d", function() {
+            var p = "M " + x + " " + y + " ";                                       // startpoint
+            p += "S " + (x-12) + " " + (y-9) + " " + (x-10) + " " + (y-20) + " ";   // leftline
+            //p += "S " + (x-13) + " " + (y-25) + " " + x + " " + (y-30) + " ";
+            //p = "S " + (x+12) + " " + (y-9) + " " + x + " " + y;
+            return p;
+        });
+}
+
 function drawMap()
 {
 
@@ -403,5 +423,12 @@ function drawMap()
 
 $(document).ready(function() 
 {
+    // remove container once the play button is clicked
+    $(".play").click(function () {
+        $(".loading").fadeOut(300, function() {
+            $(this).remove();
+        });
+    });
+
     drawMap();
 });

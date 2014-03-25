@@ -1,8 +1,3 @@
-@font-face {
-    font-family: OratorStd;
-    src: url('./oratorstd.ttf');
-}
-
 .road-minor {
     fill: none;
     stroke: #fff;
@@ -97,4 +92,10 @@ g.legend text {
     font-size: 10px;
     font-family: OratorStd;
     font-weight: 800;
+}
+
+.balloon {
+    stroke: #ff0000;
+    stroke-width: 1.5px;
+    fill: none;
 }
