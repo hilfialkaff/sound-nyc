@@ -57,7 +57,7 @@ function populateMap( _map, _projection, _events )
 		return function( _eventData ) { return ECIRCLE_SCALE_FACTOR * _eventData["sound_radii"][_level]; }
 	}
 	
-	function getDateString( _date )
+	function getDateString( _eventData )
 	{
 		return d3.time.format( "%B %e, %Y" )(_eventData[ "date" ]);
 	}
@@ -173,7 +173,7 @@ function populateMap( _map, _projection, _events )
 			jqEventGroup.qtip( "option", "content.text",
 				_eventData[ "name" ] + "</br>" +
 				"Location: " + _eventData[ "location" ] + "</br>" +
-				"Date: " + getDateString( _eventDate ) + "</br>" +
+				"Date: " + getDateString( _eventData ) + "</br>" +
 				"Loudness: " + _eventData[ "loudness" ] + " dB" );
 		} );
 		eventGroups.on( "mouseout", function( _eventData ) {
