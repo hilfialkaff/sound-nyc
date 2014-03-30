@@ -34,9 +34,9 @@ function populateMap( _map, _projection, _events )
 
 	var ECIRCLE_SCALE_FACTOR = 0.25; // TODO: Insert correct scaling factor!
 
-	var EVENT_INTERMEDIATE_DELAY = 100;
-	var EICON_TRANSITION_TIME = 400;
-	var ECIRCLE_TRANSITION_TIME = 400;
+	var EVENT_DELAY = 100;
+	var EICON_TRANS_TIME = 400;
+	var ECIRCLE_TRANS_TIME = 400;
 
 	// Helper Functions //
 	function getEventID( _eventData )
@@ -114,26 +114,26 @@ function populateMap( _map, _projection, _events )
 			var eventCircleMajor = eventCircle.select( ".major" );
 			var eventCircleMinor = eventCircle.select( ".minor" );
 
-			var creatingCircles = eventIcon.select( "circle" ).attr( "r" ) !== "0";
-			var iconDelay = creatingCircles ? 0 : ECIRCLE_TRANSITION_TIME + EVENT_INTERMEDIATE_DELAY;
-			var circleDelay = creatingCircles ? EICON_TRANSITION_TIME + EVENT_INTERMEDIATE_DELAY : 0;
+			var toCircles = eventIcon.select( "circle" ).attr( "r" ) !== "0";
+			var iconDelay = toCircles ? 0 : ECIRCLE_TRANS_TIME + EVENT_DELAY;
+			var circleDelay = toCircles ? EICON_TRANS_TIME + EVENT_DELAY : 0;
 
 			eventIconInner.transition()
-				.duration( EICON_TRANSITION_TIME ).delay( iconDelay )
-				.attr( "r", creatingCircles ? 0 : EICON_INNER_RADIUS );
+				.duration( EICON_TRANS_TIME ).delay( iconDelay )
+				.attr( "r", toCircles ? 0 : EICON_INNER_RADIUS );
 			eventIconOuter.transition()
-				.duration( EICON_TRANSITION_TIME ).delay( iconDelay )
-				.attr( "r", creatingCircles ? 0 : EICON_OUTER_RADIUS );
+				.duration( EICON_TRANS_TIME ).delay( iconDelay )
+				.attr( "r", toCircles ? 0 : EICON_OUTER_RADIUS );
 
 			eventCircleEardrum.transition()
-				.duration( ECIRCLE_TRANSITION_TIME ).delay( circleDelay )
-				.attr( "r", creatingCircles ? getEventRadiusFunction(0)(_eventData) : 0 );
+				.duration( ECIRCLE_TRANS_TIME ).delay( circleDelay )
+				.attr( "r", toCircles ? getEventRadiusFunction(0)(_eventData) : 0 );
 			eventCircleMajor.transition()
-				.duration( ECIRCLE_TRANSITION_TIME ).delay( circleDelay )
-				.attr( "r", creatingCircles ? getEventRadiusFunction(1)(_eventData) : 0 );
+				.duration( ECIRCLE_TRANS_TIME ).delay( circleDelay )
+				.attr( "r", toCircles ? getEventRadiusFunction(1)(_eventData) : 0 );
 			eventCircleMinor.transition()
-				.duration( ECIRCLE_TRANSITION_TIME ).delay( circleDelay )
-				.attr( "r", creatingCircles ? getEventRadiusFunction(2)(_eventData) : 0 );
+				.duration( ECIRCLE_TRANS_TIME ).delay( circleDelay )
+				.attr( "r", toCircles ? getEventRadiusFunction(2)(_eventData) : 0 );
 		} );
 	}
 
