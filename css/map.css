@@ -47,7 +47,7 @@ g.event-icon circle {
 
 /* Event Tooltip Styles */
 
-.tooltip-text {
+.event-tooltip {
 	font-size: 12px;
     font-family: OratorStd;
     font-weight: 600;

@@ -43,6 +43,10 @@ function populateMap( _map, _projection, _events )
 	{
 		return replaceAll( " ", "_", _eventData[ "name" ] );
 	}
+	function getEventName( _eventID )
+	{
+		return replaceAll( "_", " ", _eventID );
+	}
 	function getEventTranslation( _eventData )
 	{
 		return "translate(" + _projection( _eventData["coordinates"] ) + ")";
@@ -51,6 +55,11 @@ function populateMap( _map, _projection, _events )
 	function getEventRadiusFunction( _level )
 	{
 		return function( _eventData ) { return ECIRCLE_SCALE_FACTOR * _eventData["sound_radii"][_level]; }
+	}
+	
+	function getDateString( _date )
+	{
+		return d3.time.format( "%B %e, %Y" )(_eventData[ "date" ]);
 	}
 
 	// Other Variables //
@@ -139,60 +148,42 @@ function populateMap( _map, _projection, _events )
 
 	// Create Event Tooltips //
 	{
-		/*eventGroups.on( "mouseover", function( _eventData ) {
-			var eventGroup = d3.select( this );
+		$( ".event" ).each( function() {
+			var eventID = $( this ).attr( "id" );
+			var eventName = getEventName( eventID );
+
+			console.log( eventName );
+			$( this ).qtip( {
+				content: eventName,
+				position: { my: "center left", at: "center right" },
+				style: { classes: "qtip-shadow qtip-rounded event-tooltip" },
+				show: { ready: true },
+				hide: false,
+			} );
+		} );
+	}
+
+	// Create Tooltip Hovering Behavior //
+	{
+		eventGroups.on( "mouseover", function( _eventData ) {
+			var d3EventGroup = d3.select( this );
+			var eventID = d3EventGroup.attr( "id" );
+			var jqEventGroup = $( "#" + eventID );
+
+			jqEventGroup.qtip( "option", "content.text",
+				_eventData[ "name" ] + "</br>" +
+				"Location: " + _eventData[ "location" ] + "</br>" +
+				"Date: " + getDateString( _eventDate ) + "</br>" +
+				"Loudness: " + _eventData[ "loudness" ] + " dB" );
 		} );
 		eventGroups.on( "mouseout", function( _eventData ) {
-			
-		} );*/
-		/*$( ".event-icon" ).each( function() {
-			console.log( $( this ).parent() );
-		} );*/
-		/*$( ".event-icon" ).qtip( {
-			content: "Hello, world!",
-			position: { my: "center left", at: "center right" },
-			style: { classes: "qtip-plain qtip-shadow qtip-rounded tooltip-text" },
-			show: { ready: true },
-			hide: false,
-		} );*/
-		/*var eventIcons = eventGroups.append( "g" )
-			.attr( "class", "event-icon" );
-		var eventTooltips = eventGroups.append( "g" )
-			.attr( "class", "event-tooltip" )
-			.attr( "transform", getTooltipTranslation );
+			var d3EventGroup = d3.select( this );
+			var eventID = d3EventGroup.attr( "id" );
+			var jqEventGroup = $( "#" + eventID );
 
-		var tooltipContainers = eventTooltips.append( "rect" )
-			.attr( "class", "tooltip-container" )
-			.attr( "x", -ETOOLTIP_PADDING ).attr( "y", -ETOOLTIP_PADDING )
-			.attr( "rx", ETOOLTIP_RADIUS ).attr( "ry", ETOOLTIP_RADIUS )
-			.attr( "width", 0 ).attr( "height", 0 );
-
-		var tooltipHeadings = eventTooltips.append( "text" )
-			.attr( "class", "tooltip-heading" )
-			.attr( "dx", 0 ).attr( "dy", 0 )
-			.attr( "text-anchor", "start" )
-			.text( getTooltipHeadingText );
-
-		// Note: "dy" for text is different for text, denoting the bottom-left
-		// corner of the text instead of the top-left.  This change accounts
-		// for this discrepancy.
-		tooltipHeadings
-			.attr( "dy", function( _data ) {
-				var tooltipHeading = d3.select( this );
-				var boundingRect = tooltipHeading.node().getBBox();
-				return boundingRect.height - ETOOLTIP_PADDING;
-			} );
-
-		// Note: SVG font sizes cannot be determined until elements are rendered,
-		// so this width-height assignment for the containing rectangle element 
-		// needs to be deferred until this point.
-		tooltipContainers
-			.attr( "width", function( _data ) { 
-				return getTooltipContainerScale( _data )[ 0 ]; 
-			} )
-			.attr( "height", function( _data ) { 
-				return getTooltipContainerScale( _data )[ 1 ]; 
-			} );*/
+			jqEventGroup.qtip( "option", "content.text",
+				_eventData[ "name" ] );
+		} );
 	}
 }
 
