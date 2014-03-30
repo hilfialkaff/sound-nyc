@@ -51,6 +51,8 @@ g.playall circle {
 g.playall:hover {
     cursor: pointer;
     text-decoration: underline;
+    fill: #ff3171;
+    text-decoration-color: #ff3171;
 }
 
 g.playall text {
