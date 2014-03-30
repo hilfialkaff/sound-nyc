@@ -32,9 +32,8 @@ function populateMap( _map, _projection, _events )
 	var EICON_OUTER_RADIUS = 8.0;
 	var EICON_OUTER_STROKE = 1.5;
 
-	var ETOOLTIP_PADDING = 3.0;
-	var ETOOLTIP_RADIUS = 5.0;
-    var ETOOLTIP_RIGHT_MARGIN = 5.0;
+	// TODO: Insert the proper scaling factor here!
+	var ECIRCLE_SCALE_FACTOR = 0.25;
 
 	// Helper Functions //
 	function getEventID( _eventData )
@@ -46,27 +45,9 @@ function populateMap( _map, _projection, _events )
 		return "translate(" + _projection( _eventData["coordinates"] ) + ")";
 	}
 
-	function getTooltipTranslation( _eventData )
+	function getEventRadiusFunction( _level )
 	{
-		var tooltipOffset = [
-			EICON_OUTER_RADIUS + EICON_OUTER_STROKE + 2.0 * ETOOLTIP_PADDING,
-			-EICON_OUTER_RADIUS
-		];
-		return "translate(" + tooltipOffset + ")";
-	}
-	function getTooltipContainerScale( _eventData )
-	{
-		var headingElement = d3.select( "#" + getEventID( _eventData ) )
-			.select( ".event-tooltip" )
-			.select( ".tooltip-heading" );
-		var boundingRect = headingElement.node().getBBox();
-
-		return [ boundingRect.width + 2.0 * ETOOLTIP_PADDING + ETOOLTIP_RIGHT_MARGIN,
-			     boundingRect.height + 2.0 * ETOOLTIP_PADDING ];
-	}
-	function getTooltipHeadingText( _eventData )
-	{
-		return _eventData[ "name" ].toUpperCase();
+		return function( _eventData ) { return ECIRCLE_SCALE_FACTOR * _eventData["sound_radii"][_level]; }
 	}
 
 	// Other Variables //
@@ -77,7 +58,7 @@ function populateMap( _map, _projection, _events )
 		.attr( "class", "event" )
 		.attr( "transform", getEventTranslation );
 
-	// Create Event Indicators //
+	// Create Event Icons //
 	{
 		var eventIcons = eventGroups.append( "g" )
 			.attr( "class", "event-icon" );
@@ -86,7 +67,6 @@ function populateMap( _map, _projection, _events )
 			.attr( "cx", 0 ).attr( "cy", 0 )
 			.attr( "r", EICON_INNER_RADIUS )
 			.attr( "fill-opacity", 1.0 );
-
 		eventIcons.append( "circle" )
 			.attr( "cx", 0 ).attr( "cy", 0 )
 			.attr( "r", EICON_OUTER_RADIUS )
@@ -94,8 +74,39 @@ function populateMap( _map, _projection, _events )
 			.attr( "stroke-width", EICON_OUTER_STROKE );
 	}
 
+	// Create Event Circles //
+	{
+		var eventCircles = eventGroups.append( "g" )
+			.attr( "class", "event-circle" );
+
+		eventCircles.append( "circle" )
+			.attr( "class", "minor" )
+			.attr( "cx", 0 ).attr( "cy", 0 )
+			.attr( "r", getEventRadiusFunction(2) );
+		eventCircles.append( "circle" )
+			.attr( "class", "major" )
+			.attr( "cx", 0 ).attr( "cy", 0 )
+			.attr( "r", getEventRadiusFunction(1) );
+		eventCircles.append( "circle" )
+			.attr( "class", "eardrum" )
+			.attr( "cx", 0 ).attr( "cy", 0 )
+			.attr( "r", getEventRadiusFunction(0) );
+	}
+
 	// Create Event Tooltips //
 	{
+		/*$( ".event-icon" ).each( function() {
+			console.log( $( this ).parent() );
+		} );*/
+		/*$( ".event-icon" ).qtip( {
+			content: "Hello, world!",
+			position: { my: "center left", at: "center right" },
+			style: { classes: "qtip-plain qtip-shadow qtip-rounded tooltip-text" },
+			show: { ready: true },
+			hide: false,
+		} );*/
+		/*var eventIcons = eventGroups.append( "g" )
+			.attr( "class", "event-icon" );
 		var eventTooltips = eventGroups.append( "g" )
 			.attr( "class", "event-tooltip" )
 			.attr( "transform", getTooltipTranslation );
@@ -131,7 +142,7 @@ function populateMap( _map, _projection, _events )
 			} )
 			.attr( "height", function( _data ) { 
 				return getTooltipContainerScale( _data )[ 1 ]; 
-			} );
+			} );*/
 	}
 }
 

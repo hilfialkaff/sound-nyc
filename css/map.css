@@ -28,13 +28,10 @@
     fill: #7897b5;
 }
 
+/* Event Icons Styles */
+
 g.event-icon:hover {
     cursor: pointer;
-}
-
-g.event-icon line {
-    stroke: #ff3171;
-    stroke-width: 1.5px;
 }
 
 g.event-icon circle {
@@ -42,48 +39,32 @@ g.event-icon circle {
     fill: #ff3171;
 }
 
-g.event-icon path {
-    /*fill: none;*/
-    fill: #ff3171;
-    stroke: #ff3171;
-    stroke-width: 1.5px;
-}
+/* Event Tooltip Styles */
 
-rect.event-details {
-    stroke: #000;
-    stroke-width: 1px;
-    fill: #E8D645;
-    opacity: 0.8;
-}
-
-g.event-tooltip text {
+.tooltip-text {
 	font-size: 12px;
     font-family: OratorStd;
     font-weight: 600;
 }
 
-g rect.tooltip-container {
-    fill: #ffd157;
-    opacity: 0.8;
-}
-
+/* Legend (and Event Circle) Styles */
 
 g.legend rect.legend-box {
     fill: #fff;
     opacity: 0.8;
 }
 
-g.legend rect.eardrum {
+g.legend rect.eardrum, g.event-circle circle.eardrum {
     fill: #000;
     opacity: 0.8;
 }
 
-g.legend rect.major {
+g.legend rect.major, g.event-circle circle.major {
     fill: #ff0000;
     opacity: 0.5;
 }
 
-g.legend rect.minor {
+g.legend rect.minor, g.event-circle circle.minor {
     fill: #ff0000;
     opacity: 0.4;
 }
@@ -93,6 +74,8 @@ g.legend text {
     font-family: OratorStd;
     font-weight: 800;
 }
+
+/* Miscellaneous Styles */
 
 .balloon {
     stroke: #ff0000;
