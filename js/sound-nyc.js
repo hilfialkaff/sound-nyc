@@ -352,7 +352,11 @@ function drawPlayAll(svg, events)
                 var e = events[i];
                 var id = getEventID(e);
                 var eventGroup = d3.select("#"+id);
-                transitionCircle(eventGroup, e);
+                var eventIcon = eventGroup.select(".event-icon")
+                var isExpanded = eventIcon.select("circle").attr("r") === "0";
+
+                if (!isExpanded)
+                    transitionCircle(eventGroup, e);
             }
         });
     }
