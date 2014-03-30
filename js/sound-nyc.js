@@ -114,35 +114,7 @@ function populateMap( _map, _projection, _events )
 	{
 		eventGroups.on( "click", function( _eventData ) {
 			var eventGroup = d3.select( this );
-			var eventIcon = eventGroup.select( ".event-icon" );
-			var eventCircle = eventGroup.select( ".event-circle" );
-
-			var eventIconInner = eventIcon.select( ".inner-circle" );
-			var eventIconOuter = eventIcon.select( ".outer-circle" );
-			var eventCircleEardrum = eventCircle.select( ".eardrum" );
-			var eventCircleMajor = eventCircle.select( ".major" );
-			var eventCircleMinor = eventCircle.select( ".minor" );
-
-			var toCircles = eventIcon.select( "circle" ).attr( "r" ) !== "0";
-			var iconDelay = toCircles ? 0 : ECIRCLE_TRANS_TIME + EVENT_DELAY;
-			var circleDelay = toCircles ? EICON_TRANS_TIME + EVENT_DELAY : 0;
-
-			eventIconInner.transition()
-				.duration( EICON_TRANS_TIME ).delay( iconDelay )
-				.attr( "r", toCircles ? 0 : EICON_INNER_RADIUS );
-			eventIconOuter.transition()
-				.duration( EICON_TRANS_TIME ).delay( iconDelay )
-				.attr( "r", toCircles ? 0 : EICON_OUTER_RADIUS );
-
-			eventCircleEardrum.transition()
-				.duration( ECIRCLE_TRANS_TIME ).delay( circleDelay )
-				.attr( "r", toCircles ? getEventRadiusFunction(0)(_eventData) : 0 );
-			eventCircleMajor.transition()
-				.duration( ECIRCLE_TRANS_TIME ).delay( circleDelay )
-				.attr( "r", toCircles ? getEventRadiusFunction(1)(_eventData) : 0 );
-			eventCircleMinor.transition()
-				.duration( ECIRCLE_TRANS_TIME ).delay( circleDelay )
-				.attr( "r", toCircles ? getEventRadiusFunction(2)(_eventData) : 0 );
+            transitionCircle(eventGroup, _eventData);
 		} );
 	}
 
@@ -152,7 +124,6 @@ function populateMap( _map, _projection, _events )
 			var eventID = $( this ).attr( "id" );
 			var eventName = getEventName( eventID );
 
-			console.log( eventName );
 			$( this ).qtip( {
 				content: eventName,
 				position: { my: "center left", at: "center right" },
@@ -187,118 +158,55 @@ function populateMap( _map, _projection, _events )
 	}
 }
 
-function addEventIcons(_map,_projection,_events)
+function transitionCircle(eventGroup, eventData)
 {
-    var arc = d3.svg.arc()
-        .innerRadius(15)
-        .outerRadius(20)
-        .startAngle(5.72)
-        .endAngle(6.84);
+    // Constants
+    var EICON_INNER_RADIUS = 2.0;
+	var EICON_OUTER_RADIUS = 8.0;
+	var EICON_OUTER_STROKE = 1.5;
 
-    var pf = function(_data) {
-        return "translate(" + _projection(_data["coordinates"]) + ")";
-    };
+	var ECIRCLE_SCALE_FACTOR = 0.25; // TODO: Insert correct scaling factor!
 
-    var eventIcon = _map.selectAll(".event-icon")
-        .data(_events)
-        .enter()
-            .append("g")
-            .attr("class", "event-icon")
-            .attr("transform", pf);
+	var EVENT_DELAY = 100;
+	var EICON_TRANS_TIME = 400;
+	var ECIRCLE_TRANS_TIME = 400;
 
-    eventIcon.append("line")
-        .attr("x1", 0)
-        .attr("y1", 0)
-        .attr("x2", 11)
-        .attr("y2", -18);
-        
-    eventIcon.append("line")
-        .attr("x1", 0)
-        .attr("y1", 0)
-        .attr("x2", -11)
-        .attr("y2", -18);
+    // helper functions
+	function getEventRadiusFunction( _level )
+	{
+		return function( _eventData ) { return ECIRCLE_SCALE_FACTOR * _eventData["sound_radii"][_level]; }
+	}
 
-    /*
-    eventIcon.append("circle")
-        .attr("cx", 0)
-        .attr("cy", -15)
-        .attr("r", 2.0);
-    */
 
-    eventIcon.append("path")
-        .attr("d", arc);
+    var eventIcon = eventGroup.select( ".event-icon" );
+    var eventCircle = eventGroup.select( ".event-circle" );
 
-    showEventName(eventIcon);
+    var eventIconInner = eventIcon.select( ".inner-circle" );
+    var eventIconOuter = eventIcon.select( ".outer-circle" );
+    var eventCircleEardrum = eventCircle.select( ".eardrum" );
+    var eventCircleMajor = eventCircle.select( ".major" );
+    var eventCircleMinor = eventCircle.select( ".minor" );
 
-    eventIcon.on("mouseover", function(d) {
-        var eicon = d3.select(this);
-        showEventDetails(eicon);
-    });
+    var toCircles = eventIcon.select( "circle" ).attr( "r" ) !== "0";
+    var iconDelay = toCircles ? 0 : ECIRCLE_TRANS_TIME + EVENT_DELAY;
+    var circleDelay = toCircles ? EICON_TRANS_TIME + EVENT_DELAY : 0;
 
-    eventIcon.on("click", function(d) {
-        // TODO call Joe's circle function
-        var eicon = d3.select(this);
-        showEventName(eicon);
-    });
+    eventIconInner.transition()
+        .duration( EICON_TRANS_TIME ).delay( iconDelay )
+        .attr( "r", toCircles ? 0 : EICON_INNER_RADIUS );
+    eventIconOuter.transition()
+        .duration( EICON_TRANS_TIME ).delay( iconDelay )
+        .attr( "r", toCircles ? 0 : EICON_OUTER_RADIUS );
 
-    eventIcon.on("mouseout", function(d) {
-        var eicon = d3.select(this);
-        showEventName(eicon);
-    });
-
-    function showEventName(eicon)
-    {
-        eicon.selectAll(".event-details").remove();
-        _drawDetailsBox(eicon, 250, 30, 20);
-
-        var t = eicon.selectAll("text.event-details");
-        t.text(function(d) { return d["name"].toUpperCase(); });
-    }
-
-    function showEventDetails(eicon)
-    {
-        eicon.selectAll(".event-details").remove();
-    }
-
-    function _drawDetailsBox(eicon, width, height, offset)
-    {
-        var max_width = 960, max_height = 500;
-
-        eicon.append("rect")
-            .attr("class", "event-details")
-            .attr("x", function(d) {
-                var xprojection = _projection(d["coordinates"])[0];
-
-                if ( xprojection + width + offset <= max_width ) return offset;
-                else return max_width - (xprojection + width + offset);
-            })
-            .attr("y", function(d) {
-                var yprojection = _projection(d["coordinates"])[1];
-
-                if (yprojection + height <= max_height) return 0;
-                else return max_height - (yprojection + height);
-            })
-            .attr("width", width)
-            .attr("height", height);
-
-        eicon.append("text")
-            .attr("class", "event-details")
-            .attr("x", function(d) {
-                var toffset = offset+10;
-                var xprojection = _projection(d["coordinates"])[0];
-
-                if (xprojection + width + toffset <= max_width) return toffset;
-                else return max_width - (xprojection + width + toffset);
-            })
-            .attr("y", function(d) {
-                var yprojection = _projection(d["coordinates"])[1];
-
-                if (yprojection + height <= max_height) return height/2;
-                else return max_height - (yprojection + height) + height/2;
-            })
-            .attr("dy", ".35em")
-            .text("");
-    }
+    eventCircleEardrum.transition()
+        .duration( ECIRCLE_TRANS_TIME ).delay( circleDelay )
+        .attr( "r", toCircles ? getEventRadiusFunction(0)(eventData) : 0 );
+    eventCircleMajor.transition()
+        .duration( ECIRCLE_TRANS_TIME ).delay( circleDelay )
+        .attr( "r", toCircles ? getEventRadiusFunction(1)(eventData) : 0 );
+    eventCircleMinor.transition()
+        .duration( ECIRCLE_TRANS_TIME ).delay( circleDelay )
+        .attr( "r", toCircles ? getEventRadiusFunction(2)(eventData) : 0 );
 }
 
 /**
@@ -405,24 +313,49 @@ function drawLegend(svg)
 
 }
 
-/**
- * @param container <svg> or <g> tag that we want to append the balloon to
- * @param x Projected x coordinate to start at
- * @param y Projected y coordinate to start at
- */
-function drawBalloon(container, x, y)
+function drawPlayAll(svg, events)
 {
-    var g = container.append("g")
-        .attr("class", "balloon");
+	// Helper Functions //
+	function getEventID( _eventData )
+	{
+		return replaceAll( " ", "_", _eventData[ "name" ] );
+	}
 
-    g.append("path")
-        .attr("d", function() {
-            var p = "M " + x + " " + y + " ";                                       // startpoint
-            p += "S " + (x-12) + " " + (y-9) + " " + (x-10) + " " + (y-20) + " ";   // leftline
-            //p += "S " + (x-13) + " " + (y-25) + " " + x + " " + (y-30) + " ";
-            //p = "S " + (x+12) + " " + (y-9) + " " + x + " " + y;
-            return p;
+    var g = svg.append("g")
+            .attr("class", "playall");
+
+    // draw the play all circles
+    {
+        g.append( "circle" )
+            .attr( "cx",  860).attr( "cy", 535 )
+            .attr( "r", 8 )
+            .attr( "fill-opacity", 1.0 );
+        g.append( "circle" )
+            .attr( "cx", 860 ).attr( "cy", 535 )
+            .attr( "r", 32 )
+            .attr( "fill-opacity", 0.0 )
+            .attr( "stroke-width", 2.5 );
+    }
+
+    // draw the play all text
+    {
+        g.append("text")
+            .attr("x", 810)
+            .attr("y", 587)
+            .text("PLAY ALL");
+    }
+
+    // trigger the events
+    {
+        g.on("click", function() {
+            for(var i = 0; i < events.length; i++) {
+                var e = events[i];
+                var id = getEventID(e);
+                var eventGroup = d3.select("#"+id);
+                transitionCircle(eventGroup, e);
+            }
         });
+    }
 }
 
 function drawMap()
@@ -466,6 +399,7 @@ function drawMap()
             .attr("d", path);
         
 	    populateMap( svg, projection, mapEvents );
+        drawPlayAll(svg, mapEvents);
         drawLegend(svg);
 
         stopLoadingScreen();

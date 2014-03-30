@@ -41,6 +41,25 @@ g.event-icon circle {
     fill: #ff3171;
 }
 
+/* PlayAll Styles */
+
+g.playall circle {
+    stroke: #ff3171;
+    fill: #ff3171;
+}
+
+g.playall:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+g.playall text {
+    font-size: 20px;
+    font-family: OratorStd;
+    font-weight: 800;
+    fill: #ff3171;
+}
+
 /* Event Circle Styles */
 
 
