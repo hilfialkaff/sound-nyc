@@ -32,8 +32,11 @@ function populateMap( _map, _projection, _events )
 	var EICON_OUTER_RADIUS = 8.0;
 	var EICON_OUTER_STROKE = 1.5;
 
-	// TODO: Insert the proper scaling factor here!
-	var ECIRCLE_SCALE_FACTOR = 0.25;
+	var ECIRCLE_SCALE_FACTOR = 0.25; // TODO: Insert correct scaling factor!
+
+	var EVENT_INTERMEDIATE_DELAY = 100;
+	var EICON_TRANSITION_TIME = 400;
+	var ECIRCLE_TRANSITION_TIME = 400;
 
 	// Helper Functions //
 	function getEventID( _eventData )
@@ -64,10 +67,12 @@ function populateMap( _map, _projection, _events )
 			.attr( "class", "event-icon" );
 
 		eventIcons.append( "circle" )
+			.attr( "class", "inner-circle" )
 			.attr( "cx", 0 ).attr( "cy", 0 )
 			.attr( "r", EICON_INNER_RADIUS )
 			.attr( "fill-opacity", 1.0 );
 		eventIcons.append( "circle" )
+			.attr( "class", "outer-circle" )
 			.attr( "cx", 0 ).attr( "cy", 0 )
 			.attr( "r", EICON_OUTER_RADIUS )
 			.attr( "fill-opacity", 0.0 )
@@ -82,19 +87,64 @@ function populateMap( _map, _projection, _events )
 		eventCircles.append( "circle" )
 			.attr( "class", "minor" )
 			.attr( "cx", 0 ).attr( "cy", 0 )
-			.attr( "r", getEventRadiusFunction(2) );
+			.attr( "r", getEventRadiusFunction(2) )
+			.attr( "r", 0 );
 		eventCircles.append( "circle" )
 			.attr( "class", "major" )
 			.attr( "cx", 0 ).attr( "cy", 0 )
-			.attr( "r", getEventRadiusFunction(1) );
+			.attr( "r", getEventRadiusFunction(1) )
+			.attr( "r", 0 );
 		eventCircles.append( "circle" )
 			.attr( "class", "eardrum" )
 			.attr( "cx", 0 ).attr( "cy", 0 )
-			.attr( "r", getEventRadiusFunction(0) );
+			.attr( "r", getEventRadiusFunction(0) )
+			.attr( "r", 0 );
+	}
+
+	// Create Event Icon/Circle Cycling Behavior //
+	{
+		eventGroups.on( "click", function( _eventData ) {
+			var eventGroup = d3.select( this );
+			var eventIcon = eventGroup.select( ".event-icon" );
+			var eventCircle = eventGroup.select( ".event-circle" );
+
+			var eventIconInner = eventIcon.select( ".inner-circle" );
+			var eventIconOuter = eventIcon.select( ".outer-circle" );
+			var eventCircleEardrum = eventCircle.select( ".eardrum" );
+			var eventCircleMajor = eventCircle.select( ".major" );
+			var eventCircleMinor = eventCircle.select( ".minor" );
+
+			var creatingCircles = eventIcon.select( "circle" ).attr( "r" ) !== "0";
+			var iconDelay = creatingCircles ? 0 : ECIRCLE_TRANSITION_TIME + EVENT_INTERMEDIATE_DELAY;
+			var circleDelay = creatingCircles ? EICON_TRANSITION_TIME + EVENT_INTERMEDIATE_DELAY : 0;
+
+			eventIconInner.transition()
+				.duration( EICON_TRANSITION_TIME ).delay( iconDelay )
+				.attr( "r", creatingCircles ? 0 : EICON_INNER_RADIUS );
+			eventIconOuter.transition()
+				.duration( EICON_TRANSITION_TIME ).delay( iconDelay )
+				.attr( "r", creatingCircles ? 0 : EICON_OUTER_RADIUS );
+
+			eventCircleEardrum.transition()
+				.duration( ECIRCLE_TRANSITION_TIME ).delay( circleDelay )
+				.attr( "r", creatingCircles ? getEventRadiusFunction(0)(_eventData) : 0 );
+			eventCircleMajor.transition()
+				.duration( ECIRCLE_TRANSITION_TIME ).delay( circleDelay )
+				.attr( "r", creatingCircles ? getEventRadiusFunction(1)(_eventData) : 0 );
+			eventCircleMinor.transition()
+				.duration( ECIRCLE_TRANSITION_TIME ).delay( circleDelay )
+				.attr( "r", creatingCircles ? getEventRadiusFunction(2)(_eventData) : 0 );
+		} );
 	}
 
 	// Create Event Tooltips //
 	{
+		/*eventGroups.on( "mouseover", function( _eventData ) {
+			var eventGroup = d3.select( this );
+		} );
+		eventGroups.on( "mouseout", function( _eventData ) {
+			
+		} );*/
 		/*$( ".event-icon" ).each( function() {
 			console.log( $( this ).parent() );
 		} );*/

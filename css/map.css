@@ -28,16 +28,22 @@
     fill: #7897b5;
 }
 
-/* Event Icons Styles */
+/* General Event Stylings */
 
-g.event-icon:hover {
+g.event:hover {
     cursor: pointer;
 }
+
+/* Event Icons Styles */
 
 g.event-icon circle {
     stroke: #ff3171;
     fill: #ff3171;
 }
+
+/* Event Circle Styles */
+
+
 
 /* Event Tooltip Styles */
 
