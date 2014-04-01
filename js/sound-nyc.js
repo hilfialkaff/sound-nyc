@@ -128,7 +128,9 @@ function populateMap( _map, _projection, _events )
 				content: eventName,
 				position: { my: "center left", at: "center right" },
 				style: { classes: "qtip-shadow qtip-rounded event-tooltip" },
-				show: { ready: true },
+				show: {
+					effect: function() { $( this ).fadeTo(300, 1); }
+				},
 				hide: false,
 			} );
 		} );
@@ -431,6 +433,9 @@ $(document).ready(function()
         $(".loading").fadeOut(300, function() {
             $(this).remove();
         });
+		$( ".event" ).each( function() {
+			$( this ).qtip( "api" ).show();
+		} );
     });
 
     drawMap();
