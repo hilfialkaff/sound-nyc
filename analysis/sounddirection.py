@@ -51,7 +51,9 @@ def plot(source, name):
         plt.plot([solve_r(source,EARDRUM_DECIBEL)], [EARDRUM_DECIBEL], 'yo')
     if source >= DANGER_DECIBEL:
         plt.plot([solve_r(source,DANGER_DECIBEL)], [DANGER_DECIBEL], 'bo')
-    plt.plot([solve_r(source,MIN_DECIBEL)], [MIN_DECIBEL], 'go')
+    if source >= MIN_DECIBEL:
+        plt.plot([solve_r(source,MIN_DECIBEL)], [MIN_DECIBEL], 'go')
+    plt.plot([solve_r(source,0.0)], [0.0], 'po')
     plt.xlabel('Distance in meters from source')
     plt.ylabel('Decibels')
     plt.savefig(name)
@@ -98,7 +100,9 @@ def print_solve(source,name):
         print "Eardrum distance: ", solve_r(source,EARDRUM_DECIBEL)
     if source >= DANGER_DECIBEL:
         print "Danger distance: ", solve_r(source,DANGER_DECIBEL)
-    print "Safe distance: ", solve_r(source,MIN_DECIBEL)
+    if source >= MIN_DECIBEL:
+        print "Min distance: ", solve_r(source,MIN_DECIBEL)
+    print "Safe distance: ", solve_r(source, 0.0)
 
 def solve_twintowers():
     print_solve(198.1, "TWINTOWERS")
@@ -145,5 +149,5 @@ def solve_all():
     solve_lightning()
 
 if __name__=='__main__':
-    plot_all()
+    #plot_all()
     solve_all()
