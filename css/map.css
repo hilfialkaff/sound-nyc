@@ -72,6 +72,10 @@ g.playall text {
 	font-size: 12px;
     font-family: OratorStd;
     font-weight: 600;
+
+    background-color: #fdee20;
+    border-color: #fdee20;
+    border-width: 0px;
 }
 
 /* Legend (and Event Circle) Styles */
