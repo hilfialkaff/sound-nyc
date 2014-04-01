@@ -100,6 +100,11 @@ g.legend rect.minor, g.event-circle circle.minor {
     opacity: 0.4;
 }
 
+g.legend rect.hear, g.event-circle circle.hear {
+    fill: #ff0000;
+    opacity: 0.2;
+}
+
 g.legend text {
     font-size: 10px;
     font-family: OratorStd;

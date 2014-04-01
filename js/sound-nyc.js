@@ -120,6 +120,11 @@ function populateMap( _map, _projection, _events )
 			.attr( "class", "event-circle" );
 
 		eventCircles.append( "circle" )
+			.attr( "class", "hear" )
+			.attr( "cx", 0 ).attr( "cy", 0 )
+			.attr( "r", getEventRadiusFunction(3) )
+			.attr( "r", 0 );
+		eventCircles.append( "circle" )
 			.attr( "class", "minor" )
 			.attr( "cx", 0 ).attr( "cy", 0 )
 			.attr( "r", getEventRadiusFunction(2) )
@@ -196,6 +201,7 @@ function transitionCircle(eventGroup, eventData)
     var eventCircleEardrum = eventCircle.select( ".eardrum" );
     var eventCircleMajor = eventCircle.select( ".major" );
     var eventCircleMinor = eventCircle.select( ".minor" );
+    var eventCircleHear = eventCircle.select( ".hear" );
 
     var toCircles = eventIcon.select( "circle" ).attr( "r" ) !== "0";
     var iconDelay = toCircles ? 0 : ECIRCLE_TRANS_TIME + EVENT_DELAY;
@@ -217,6 +223,9 @@ function transitionCircle(eventGroup, eventData)
     eventCircleMinor.transition()
         .duration( ECIRCLE_TRANS_TIME ).delay( circleDelay )
         .attr( "r", toCircles ? getEventRadiusFunction(2)(eventData) : 0 );
+    eventCircleHear.transition()
+        .duration( ECIRCLE_TRANS_TIME ).delay( circleDelay )
+        .attr( "r", toCircles ? getEventRadiusFunction(3)(eventData) : 0 );
 }
 
 /**
