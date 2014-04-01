@@ -5,7 +5,6 @@
 
 .map {
     margin: 0 auto;
-    border: 1px solid #000;
     width: 960px;
     height: 700px;
     position: relative;
@@ -118,34 +117,3 @@ span.b {
 }
 
 /**************************************************/
-
-.faq {
-    margin-top: 50px;
-    border-top:1px dashed black;
-    display: block;
-    background-color: #7897b5;
-    position: absolute;
-    left: 0;
-    right: 0;
-}
-
-.faq h1 {
-    font-family: OratorStd;
-    font-size: 200px;
-    color: #fff;
-    text-shadow: 1px 1px #fff;
-    text-align: center;
-    margin-top: 0px;
-    margin-bottom: 0px;
-}
-
-.question {
-    margin-left: 20px;
-}
-
-.question h2 {
-    color: #fff;
-    font-family: OratorStd;
-    font-weight: 500;
-    font-size: 30px;
-}
