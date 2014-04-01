@@ -1,5 +1,54 @@
+// Constant Variables //
 var width = 960,
     height = 700;
+
+var PROJECTION =  d3.geo.mercator()
+        .center([-74, 40.79])
+        .scale(320000)
+        .translate([width/6, height/50]);
+
+var EICON_INNER_RADIUS = 2.0;
+var EICON_OUTER_RADIUS = 8.0;
+var EICON_OUTER_STROKE = 1.5;
+
+var EVENT_DELAY = 100;
+var EICON_TRANS_TIME = 400;
+var ECIRCLE_TRANS_TIME = 400;
+
+// Helper Functions //
+
+function getEventID( _eventData )
+{
+	return replaceAll( " ", "_", _eventData[ "name" ] );
+}
+function getEventName( _eventID )
+{
+	return replaceAll( "_", " ", _eventID );
+}
+function getEventTranslation( _eventData )
+{
+	return "translate(" + PROJECTION( _eventData["coordinates"] ) + ")";
+}
+
+function getEventRadiusFunction( _level )
+{
+	return function( _eventData ) { return computeScaleFactor() * _eventData["sound_radii"][_level]; }
+}
+
+function getDateString( _eventData )
+{
+	return d3.time.format( "%B %e, %Y" )(_eventData[ "date" ]);
+}
+
+// Miscellaneous Functions //
+
+function calcDistance( _p1, _p2 )
+{
+	return Math.sqrt( 
+		Math.pow( _p1[0] - _p2[0], 2 ) +
+		Math.pow( _p1[1] - _p2[1], 2 )
+	);
+}
 
 /**
  * Find and replace all function for JavaScript strings.
@@ -8,7 +57,19 @@ var width = 960,
  */
 function replaceAll( _find, _replace, _str )
 {
-	  return _str.replace( new RegExp(_find, 'g'), _replace);
+	return _str.replace( new RegExp(_find, 'g'), _replace);
+}
+
+function computeScaleFactor()
+{
+	// Real Anchor Used: Width of Manhattan
+	// (source: https://www.google.com/#q=width+of+manhattan+in+miles)
+	var realDistance = 3700;
+	var pixelPosition1 = PROJECTION( [-74.009149, 40.742542] );
+	var pixelPosition2 = PROJECTION( [-73.971598, 40.726543] );
+	var pixelDistance = calcDistance( pixelPosition1, pixelPosition2 );
+
+	return pixelDistance / realDistance;
 }
 
 /**
@@ -27,41 +88,6 @@ function replaceAll( _find, _replace, _str )
  */
 function populateMap( _map, _projection, _events )
 {
-	// Constant Values //
-	var EICON_INNER_RADIUS = 2.0;
-	var EICON_OUTER_RADIUS = 8.0;
-	var EICON_OUTER_STROKE = 1.5;
-
-	var ECIRCLE_SCALE_FACTOR = 0.25; // TODO: Insert correct scaling factor!
-
-	var EVENT_DELAY = 100;
-	var EICON_TRANS_TIME = 400;
-	var ECIRCLE_TRANS_TIME = 400;
-
-	// Helper Functions //
-	function getEventID( _eventData )
-	{
-		return replaceAll( " ", "_", _eventData[ "name" ] );
-	}
-	function getEventName( _eventID )
-	{
-		return replaceAll( "_", " ", _eventID );
-	}
-	function getEventTranslation( _eventData )
-	{
-		return "translate(" + _projection( _eventData["coordinates"] ) + ")";
-	}
-
-	function getEventRadiusFunction( _level )
-	{
-		return function( _eventData ) { return ECIRCLE_SCALE_FACTOR * _eventData["sound_radii"][_level]; }
-	}
-	
-	function getDateString( _eventData )
-	{
-		return d3.time.format( "%B %e, %Y" )(_eventData[ "date" ]);
-	}
-
 	// Other Variables //
 	var overlay = _map.append( "g" );
 	var eventGroups = overlay.selectAll( ".event" )
@@ -162,24 +188,6 @@ function populateMap( _map, _projection, _events )
 
 function transitionCircle(eventGroup, eventData)
 {
-    // Constants
-    var EICON_INNER_RADIUS = 2.0;
-	var EICON_OUTER_RADIUS = 8.0;
-	var EICON_OUTER_STROKE = 1.5;
-
-	var ECIRCLE_SCALE_FACTOR = 0.25; // TODO: Insert correct scaling factor!
-
-	var EVENT_DELAY = 100;
-	var EICON_TRANS_TIME = 400;
-	var ECIRCLE_TRANS_TIME = 400;
-
-    // helper functions
-	function getEventRadiusFunction( _level )
-	{
-		return function( _eventData ) { return ECIRCLE_SCALE_FACTOR * _eventData["sound_radii"][_level]; }
-	}
-
-
     var eventIcon = eventGroup.select( ".event-icon" );
     var eventCircle = eventGroup.select( ".event-circle" );
 
@@ -317,12 +325,6 @@ function drawLegend(svg)
 
 function drawPlayAll(svg, events)
 {
-	// Helper Functions //
-	function getEventID( _eventData )
-	{
-		return replaceAll( " ", "_", _eventData[ "name" ] );
-	}
-
     var g = svg.append("g")
             .attr("class", "playall");
 
