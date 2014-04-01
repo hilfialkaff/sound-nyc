@@ -46,5 +46,13 @@ var mapEvents = [
         "coordinates": [ -73.976297, 40.776122 ],
         "sound_radii": [ 0.0, 28.0, 127.0 ],
 		"loudness": 153.5
+    },
+    {
+        "name": "Strong thunderstorms",
+        "date": new Date( 2010, 9, 16, 0, 0, 0, 0 ),
+        "location": "Bedford-Stuyvesant neighborhood, New York",
+        "coordinates": [ -73.951822, 40.715585 ],
+        "sound_radii": [ 0.0, 1.68859316317954, 43.8001055856396 ],
+		"loudness": 120.0
     }
 ];

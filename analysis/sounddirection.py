@@ -32,7 +32,7 @@ def solve_db(source,r):
     return solve(source-t-20*log10(r)-A_ATMOSPHERE*r-A_WEATHER*r-A_GROUND*r-A_BARRIER*r/DISTANCE_BUILDINGS,t)[0]
 
 def plot(source, name):
-    print name 
+    print name
     db = source
     r = 1
     distances = []
@@ -78,6 +78,9 @@ def plot_wallstreet():
 def plot_bieber():
     plot(110.0, 'bieber.png')
 
+def plot_lightning():
+    plot(120.0, 'lightning.png')
+
 def plot_all():
     plot_twintowers()
     plot_steampipe()
@@ -86,7 +89,7 @@ def plot_all():
     plot_johnlennon()
     plot_wallstreet()
     plot_bieber()
-
+    plot_lightning()
 
 def print_solve(source,name):
     print name
@@ -97,17 +100,15 @@ def print_solve(source,name):
         print "Danger distance: ", solve_r(source,DANGER_DECIBEL)
     print "Safe distance: ", solve_r(source,MIN_DECIBEL)
 
-
 def solve_twintowers():
     print_solve(198.1, "TWINTOWERS")
-
 
 def solve_steampipe():
      print_solve(150.0, "STEAMPIPE")
 
 def solve_balldrop():
     print_solve(120.0, "BALLDROP")
-    
+
 def solve_restaurant():
     print_solve(106.0, "RESTAURANT")
 
@@ -122,6 +123,9 @@ def solve_bieber():
     # you wish
     print_solve(110.0, "BIEBER")
 
+def solve_lightning():
+    # lolololol
+    print_solve(120.0, "LIGHTNING")
 
 def solve_all():
     solve_twintowers()
@@ -137,7 +141,8 @@ def solve_all():
     solve_wallstreet()
     print " "
     solve_bieber()
-    
+    print " "
+    solve_lightning()
 
 if __name__=='__main__':
     plot_all()
