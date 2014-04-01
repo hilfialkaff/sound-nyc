@@ -156,7 +156,7 @@ function populateMap( _map, _projection, _events )
 			var eventName = getEventName( eventID );
 
 			$( this ).qtip( {
-				content: eventName,
+				content: eventName.toLowerCase(),
 				position: { my: "center left", at: "center right" },
 				style: { classes: "qtip-shadow qtip-rounded event-tooltip" },
 				show: {
@@ -175,10 +175,11 @@ function populateMap( _map, _projection, _events )
 			var jqEventGroup = $( "#" + eventID );
 
 			jqEventGroup.qtip( "option", "content.text",
-				_eventData[ "name" ] + "</br>" +
+				(_eventData[ "name" ] + "</br>" +
 				"Location: " + _eventData[ "location" ] + "</br>" +
 				"Date: " + getDateString( _eventData ) + "</br>" +
-				"Loudness: " + _eventData[ "loudness" ] + " dB" );
+				"Loudness: " + _eventData[ "loudness" ] + " dB")
+				.toLowerCase() );
 		} );
 		eventGroups.on( "mouseout", function( _eventData ) {
 			var d3EventGroup = d3.select( this );
@@ -186,7 +187,7 @@ function populateMap( _map, _projection, _events )
 			var jqEventGroup = $( "#" + eventID );
 
 			jqEventGroup.qtip( "option", "content.text",
-				_eventData[ "name" ] );
+				(_eventData[ "name" ]).toLowerCase() );
 		} );
 	}
 }
@@ -268,7 +269,8 @@ function drawLegend(svg)
         R_X = LEGEND_X + R_LMARGIN,
         R_EARDRUM_Y = LEGEND_Y + R_TMARGIN,
         R_MAJOR_Y = R_EARDRUM_Y + R_BETWEEN_OFFSET,
-        R_MINOR_Y = R_MAJOR_Y + R_BETWEEN_OFFSET;
+        R_MINOR_Y = R_MAJOR_Y + R_BETWEEN_OFFSET,
+		R_HEAR_Y = R_MINOR_Y + R_BETWEEN_OFFSET;
 
     {
         // draw the legend rectangles
@@ -294,6 +296,15 @@ function drawLegend(svg)
             .attr("class", "minor")
             .attr("x", R_X)
             .attr("y", R_MINOR_Y)
+            .attr("width", R_WIDTH)
+            .attr("height", R_HEIGHT)
+            .attr("rx", R_RX)
+            .attr("ry", R_RY);
+
+        g.append("rect")
+            .attr("class", "hear")
+            .attr("x", R_X)
+            .attr("y", R_HEAR_Y)
             .attr("width", R_WIDTH)
             .attr("height", R_HEIGHT)
             .attr("rx", R_RX)
