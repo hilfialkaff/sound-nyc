@@ -37,7 +37,7 @@ function getEventRadiusFunction( _level )
 
 function getDateString( _eventData )
 {
-	return d3.time.format( "%B %e, %Y" )(_eventData[ "date" ]);
+	return _eventData["date"] === "" ? "" : d3.time.format( "%B %e, %Y" )(_eventData[ "date" ]);
 }
 
 // Miscellaneous Functions //
