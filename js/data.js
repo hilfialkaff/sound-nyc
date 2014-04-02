@@ -5,6 +5,7 @@ var mapEvents = [
         "location": "Twin Towers, Albany Street, New York, New York",
         "coordinates": [-74.013436, 40.715087],
         "sound_radii": [39.0, 200.0, 387.0, 873.0],
+        "accurate": true,
         "loudness": 198.1
     },
     {
@@ -13,6 +14,7 @@ var mapEvents = [
         "location": "Lexington Avenue + 41st Street, New York, New York",
         "coordinates": [-73.972924, 40.755539],
         "sound_radii": [0.0, 21.0 , 139.0, 592.0],
+        "accurate": false,
         "loudness": 150.0
     },
     {
@@ -21,6 +23,7 @@ var mapEvents = [
         "location": "Times Square, New York, New York",
         "coordinates": [-73.985455, 40.761651],
         "sound_radii": [0.0, 0.0, 32.0, 423.0],
+        "accurate": false,
         "loudness": 120.0
     },
     {
@@ -29,6 +32,7 @@ var mapEvents = [
         "location": "Madison Square Garden, Pennsylvania Plaza, New York, New York",
         "coordinates": [-73.993352, 40.750598],
         "sound_radii": [0.0, 0.0, 14.0, 368.0],
+        "accurate": false,
         "loudness": 110.0
     },
     {
@@ -37,6 +41,7 @@ var mapEvents = [
         "location": "Wall Street, New York",
         "coordinates": [ -74.008741, 40.706148 ],
         "sound_radii": [ 5.0, 96.0, 261.0, 737.0],
+        "accurate": true,
 		"loudness": 175.0
     },
     {
@@ -45,6 +50,7 @@ var mapEvents = [
         "location": "West 72nd Street, New York",
         "coordinates": [ -73.976297, 40.776122 ],
         "sound_radii": [ 0.0, 28.0, 154.0, 613.0],
+        "accurate": true,
 		"loudness": 153.5
     },
     {
@@ -53,6 +59,7 @@ var mapEvents = [
         "location": "Bedford-Stuyvesant neighborhood, New York",
         "coordinates": [ -73.951822, 40.715585 ],
         "sound_radii": [ 0.0, 1.0, 32.0, 423.0 ],
+        "accurate": false,
 		"loudness": 120.0
     }
 ];
