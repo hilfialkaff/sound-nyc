@@ -61,5 +61,23 @@ var mapEvents = [
         "sound_radii": [ 0.0, 1.0, 32.0, 423.0 ],
         "accurate": false,
 		"loudness": 120.0
+    },
+    {
+        "name": "New York Subway",
+        "date": "",
+        "location": "Hunterspoint Avenue, New York",
+        "coordinates": [-73.946915, 40.744627],
+        "sound_radii": [0.0, 0.0, 3.0, 282.0],
+        "accurate": false,
+        "loudness": 94.0
+    },
+    {
+        "name": "Airplane takeoff",
+        "date": "",
+        "location": "LaGuardia Airport, New York",
+        "coordinates": [-73.872349, 40.777509],
+        "sound_radii": [9.0, 117.0, 287.0, 766.0],
+        "accurate": true,
+        "loudness": 180
     }
 ];

@@ -320,7 +320,8 @@ function drawLegend(svg)
         T_EARDRUM_Y = R_EARDRUM_Y + 6,
         T_MAJOR_Y = T_EARDRUM_Y + T_BETWEEN_OFFSET,
         T_MINOR_Y = T_MAJOR_Y + T_BETWEEN_OFFSET,
-        T_SAFE_Y = T_MINOR_Y + T_BETWEEN_OFFSET;
+        T_SAFE_Y = T_MINOR_Y + T_BETWEEN_OFFSET,
+        T_ACCURATE_Y = T_SAFE_Y + T_BETWEEN_OFFSET-5;
 
     {
         // add the text for the legend
@@ -343,6 +344,18 @@ function drawLegend(svg)
             .attr("x", T_X)
             .attr("y", T_SAFE_Y)
             .text("[84-0DB] SAFE");
+
+        g.append("text")
+            .attr("x", R_X + R_WIDTH/2)
+            .attr("y", T_ACCURATE_Y)
+            .attr("class", "accuracy")
+            .text("*");
+
+        g.append("text")
+            .attr("x", T_X)
+            .attr("y", T_ACCURATE_Y)
+            .attr("class", "accuracy")
+            .text("the decibel level is an approximation");
     }
 
 }

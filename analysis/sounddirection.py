@@ -131,6 +131,12 @@ def solve_lightning():
     # lolololol
     print_solve(120.0, "LIGHTNING")
 
+def solve_train():
+    print_solve(94.0, "CHOO CHOO")
+
+def solve_airplane_takeoff():
+    print_solve(180.0, "AIRPLANE TAKEOFF")
+
 def solve_all():
     solve_twintowers()
     print " "
@@ -147,6 +153,10 @@ def solve_all():
     solve_bieber()
     print " "
     solve_lightning()
+    print " "
+    solve_train()
+    print " "
+    solve_airplane_takeoff()
 
 if __name__=='__main__':
     #plot_all()

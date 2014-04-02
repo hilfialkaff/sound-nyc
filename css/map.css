@@ -116,6 +116,11 @@ g.legend text {
     font-weight: 800;
 }
 
+g.legend text.accuracy {
+    font-size: 10px;
+    font-weight: 800;
+}
+
 /* Miscellaneous Styles */
 
 .balloon {
