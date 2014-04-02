@@ -44,7 +44,7 @@ function getDateString( _eventData )
 
 function calcDistance( _p1, _p2 )
 {
-	return Math.sqrt( 
+	return Math.sqrt(
 		Math.pow( _p1[0] - _p2[0], 2 ) +
 		Math.pow( _p1[1] - _p2[1], 2 )
 	);
@@ -154,9 +154,12 @@ function populateMap( _map, _projection, _events )
 		$( ".event" ).each( function() {
 			var eventID = $( this ).attr( "id" );
 			var eventName = getEventName( eventID );
+			var d3event = d3.select( "#" + eventID );
+			var eventData = d3event.datum();
 
 			$( this ).qtip( {
-				content: eventName.toLowerCase(),
+				content: (eventData["name"] + (eventData[ "accurate" ] ? "" : "*" ).toLowerCase())
+				.toLowerCase(),
 				position: { my: "center left", at: "center right" },
 				style: { classes: "qtip-shadow qtip-rounded event-tooltip" },
 				show: {
@@ -175,7 +178,7 @@ function populateMap( _map, _projection, _events )
 			var jqEventGroup = $( "#" + eventID );
 
 			jqEventGroup.qtip( "option", "content.text",
-				(_eventData[ "name" ] + "</br>" +
+				(_eventData[ "name" ] + (_eventData[ "accurate" ] ? "" : "*" ) + "</br>" +
 				"Location: " + _eventData[ "location" ] + "</br>" +
 				"Date: " + getDateString( _eventData ) + "</br>" +
 				"Loudness: " + _eventData[ "loudness" ] + " dB")
@@ -187,7 +190,8 @@ function populateMap( _map, _projection, _events )
 			var jqEventGroup = $( "#" + eventID );
 
 			jqEventGroup.qtip( "option", "content.text",
-				(_eventData[ "name" ]).toLowerCase() );
+                (_eventData[ "name" ] + (_eventData[ "accurate" ] ? "" : "*" ))
+				.toLowerCase() );
 		} );
 	}
 }
@@ -393,21 +397,21 @@ function drawMap()
         .center([-74, 40.79])
         .scale(320000)
         .translate([width/6, height/50]);
-        
+
     var path = d3.geo.path()
         .projection(projection);
-        
+
     var svg = d3.select(".map").append("svg")
         .attr("width", width)
         .attr("height", height);
-        
+
     svg.append("rect")
             .attr("x", 0)
             .attr("y", 0)
             .attr("width", width)
             .attr("height", height)
             .attr("class", "background");
-        
+
     var map = svg.append("g");
 
     d3.json("map/nyctopo.json", function(err, json) {
@@ -425,7 +429,7 @@ function drawMap()
                 }
             })
             .attr("d", path);
-        
+
 	    populateMap( svg, projection, mapEvents );
         drawPlayAll(svg, mapEvents);
         drawLegend(svg);
@@ -442,13 +446,13 @@ function stopLoadingScreen()
 {
     var contents = $(".spinner").contents();
     $(".spinner").replaceWith(contents);
-    
+
     contents = $(".mask").contents();
     $(".mask").replaceWith(contents);
 }
 
 
-$(document).ready(function() 
+$(document).ready(function()
 {
     // remove container once the play button is clicked
     $(".play").click(function () {
