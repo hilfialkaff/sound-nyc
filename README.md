@@ -39,5 +39,5 @@ Everyone contributed equally in terms of work load.
 - Hilfi Alkaff: Helped in the design ideas, implementation of the tooltips.
 - Joseph Ciurej: Helped in the design ideas, implementation of the events. Mainly the circle displays, tooltips and legend.
 - Joshua Friedman: Helped in the design ideas, entered events to visualize.
-- Efe Karakus: Helped in the design ideas, implemented the map, created the legend.
+- Efe Karakus: Helped in the design ideas, implemented the map, created the legend and play all button.
 - Helen Zhou: Created the design presentation, helped with the fonts and colors of the visualization.
