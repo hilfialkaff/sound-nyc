@@ -30,3 +30,14 @@ Visit [http://localhost:8008](http://localhost:8008)
 
 The outdoor sound propagation [formula](http://www.me.psu.edu/lamancusa/me458/10_osp.pdf) was adapted from 
 [ME 458: Engineering Noise Control](http://www.me.psu.edu/lamancusa/me458/) from PennState University.
+
+
+## Team
+
+Everyone contributed equally in terms of work load.
+
+- Hilfi Alkaff: Helped in the design ideas, implementation of the tooltips.
+- Joseph Ciurej: Helped in the design ideas, implementation of the events. Mainly the circle displays, tooltips and legend.
+- Joshua Friedman: Helped in the design ideas, entered events to visualize.
+- Efe Karakus: Helped in the design ideas, implemented the map, created the legend.
+- Helen Zhou: Created the design presentation, helped with the fonts and colors of the visualization.
